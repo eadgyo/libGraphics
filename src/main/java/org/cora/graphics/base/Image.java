@@ -7,18 +7,21 @@ import org.cora.graphics.graphics.myColor;
 import org.cora.maths.Rectangle;
 import org.cora.maths.Vector2D;
 
+/**
+ * Create and handle images Texture are not copied just stored Support frames animation
+ */
 public class Image implements Cloneable
 {
     protected SpriteData spriteData;
-    protected myColor    colorFilter;
-    protected myColor    color;
-    protected int        cols;
-    protected int        currentFrame;
-    protected Rectangle  rec;
-    protected int        startFrame;
-    protected int        endFrame;
-    protected float      frameDuration;
-    protected float      time;
+    protected myColor colorFilter;
+    protected myColor color;
+    protected int cols;
+    protected int currentFrame;
+    protected Rectangle rec;
+    protected int startFrame;
+    protected int endFrame;
+    protected float frameDuration;
+    protected float time;
 
     public Image()
     {
@@ -42,11 +45,25 @@ public class Image implements Cloneable
         set(image);
     }
 
+    /**
+     * Create an image from a texture This image will cover the all texture
+     *
+     * @param surface texture
+     */
     public Image(Surface surface)
     {
         this(surface, surface.w, surface.h, 0);
     }
 
+    /**
+     * Create an image from part of texture
+     *
+     * @param surface texture
+     * @param x       left top x coordinate of the start of part of texture
+     * @param y       left top y coordiante of the start of part of texture
+     * @param width   width of part
+     * @param height  height of part
+     */
     public Image(Surface surface, int x, int y, int width, int height)
     {
         spriteData = new SpriteData();
@@ -57,6 +74,15 @@ public class Image implements Cloneable
         initialize(surface, x, y, width, height);
     }
 
+
+    /**
+     * Create an image from part of texture
+     *
+     * @param surface      texture
+     * @param width        width of part
+     * @param height       height of part
+     * @param currentFrame the nrd square with specified dimension
+     */
     public Image(Surface surface, int width, int height, int currentFrame)
     {
         spriteData = new SpriteData();
@@ -66,6 +92,9 @@ public class Image implements Cloneable
         initialize(surface, width, height, currentFrame);
     }
 
+    /**
+     * Reset all transformations
+     */
     public void reset()
     {
         setFlipV(false);
@@ -79,11 +108,17 @@ public class Image implements Cloneable
     // Get //
     // /////////////////
 
+    /**
+     * @return rectangle that stored transformation
+     */
     public Rectangle getRectangle()
     {
         return rec;
     }
 
+    /**
+     * @return the number of column in the texture
+     */
     public int getCols()
     {
         return cols;
@@ -123,37 +158,57 @@ public class Image implements Cloneable
     {
         return rec.getLeft();
     }
-    
+
     public float getLeftX()
     {
         return rec.getLeftX();
     }
-    
+
     public float getLeftY()
     {
         return rec.getLeftY();
     }
 
+    /**
+     * @return rotation in radians
+     */
     public float getRadians()
     {
         return rec.getAngle();
     }
 
+
+    /**
+     * @param vec origin vector
+     *
+     * @return rotation in radians
+     */
     float getRadians(Vector2D vec)
     {
         return rec.getAngle(vec);
     }
 
+    /**
+     * @return rotation in degrees
+     */
     public float getDegrees()
     {
         return (float) ((rec.getAngle() * 180) / Math.PI);
     }
 
+    /**
+     * @param vec origin vector
+     *
+     * @return rotation in degrees
+     */
     public float getDegress(Vector2D vec)
     {
         return (float) ((rec.getAngle(vec) * 180) / Math.PI);
     }
 
+    /**
+     * @return the currentFrame in the texture
+     */
     public int getCurrentFrame()
     {
         return currentFrame;
@@ -214,11 +269,18 @@ public class Image implements Cloneable
         return frameDuration;
     }
 
+    /**
+     * @return the frame that is defined as start
+     */
     public int getStartFrame()
     {
         return startFrame;
     }
 
+
+    /**
+     * @return the frame that is defined as end
+     */
     public int getEndFrame()
     {
         return endFrame;
@@ -240,6 +302,9 @@ public class Image implements Cloneable
         setTime(image.getTime());
     }
 
+    /**
+     * @param dt duration between two frames
+     */
     public void setFrameDuration(float dt)
     {
         frameDuration = dt;
@@ -250,55 +315,102 @@ public class Image implements Cloneable
         this.time = time;
     }
 
+    /**
+     * @param start defined start frame
+     * @param end   defined end frame
+     */
     public void setFrames(int start, int end)
     {
         startFrame = start;
         endFrame = end;
     }
 
+    /**
+     * Translate the center of image to desired location
+     *
+     * @param x coordinate
+     */
     public void setX(float x)
     {
         translateX(x - getX());
     }
 
+    /**
+     * Translate the center of image to desired location
+     *
+     * @param y coordinate
+     */
     public void setY(float y)
     {
         translateY(y - getY());
     }
 
+    /**
+     * Translate the center of image to desired location
+     *
+     * @param center coordinates
+     */
     public void setPos(Vector2D center)
     {
         Vector2D translateV = new Vector2D(getPos(), center);
         translate(translateV);
     }
 
+    /**
+     * Translate the center of image to desired location
+     *
+     * @param x coordinate
+     * @param y coordinate
+     */
     public void setPos(float x, float y)
     {
         setX(x);
         setY(y);
     }
 
+    /**
+     * Translate the top left of image to desired location
+     *
+     * @param left coordinates
+     */
     public void setLeftPos(Vector2D left)
     {
         Vector2D translateV = new Vector2D(getLeftPos(), left);
         translate(translateV);
     }
-    
+
+    /**
+     * Translate the top left of image to desired location
+     *
+     * @param x coordinate
+     */
     public void setLeftX(float x)
     {
         translateX(x - getLeftX());
     }
-    
+
+    /**
+     * Translate the top left of image to desired location
+     *
+     * @param y coordinate
+     */
     public void setLeftY(float y)
     {
         translateY(y - getLeftY());
     }
-    
+
+    /**
+     * Translate the top left of image to desired location
+     *
+     * @param x coordinate
+     * @param y coordinate
+     */
     public void setLeftPos(float x, float y)
     {
         setLeftX(x);
         setLeftY(y);
     }
+
 
     public void setDegrees(float degrees)
     {
@@ -365,6 +477,11 @@ public class Image implements Cloneable
         this.colorFilter.set(colorFilter);
     }
 
+    /**
+     * Set the color of the image
+     *
+     * @param color image color
+     */
     public void setColor(myColor color)
     {
         this.color.set(color);
@@ -408,6 +525,11 @@ public class Image implements Cloneable
         spriteData.rect.y = rect.y;
     }
 
+    /**
+     * Set rectangle that holds transformations
+     *
+     * @param rec transformations rectangle
+     */
     public void setRec(Rectangle rec)
     {
         this.rec.set(rec);
@@ -427,6 +549,9 @@ public class Image implements Cloneable
         spriteData.surface = null;
     }
 
+    /**
+     * Set the currentFrame to the nextFrame
+     */
     public void nextFrame()
     {
         currentFrame = ((currentFrame + 1) > endFrame) ? startFrame
@@ -434,9 +559,15 @@ public class Image implements Cloneable
         setRect();
     }
 
+    /**
+     * Update frames animation
+     *
+     * @param dt time since last update
+     */
     public void update(float dt)
     {
         time += dt;
+        int lastFrame = currentFrame;
         while (time > frameDuration)
         {
             time -= frameDuration;
@@ -444,7 +575,8 @@ public class Image implements Cloneable
         }
         currentFrame = ((currentFrame) > endFrame) ? startFrame
                 + (currentFrame) % endFrame : currentFrame;
-        setRect();
+        if (lastFrame != currentFrame)
+            setRect();
     }
 
     public void setRect()
@@ -464,13 +596,26 @@ public class Image implements Cloneable
         spriteData.rect.set(x, y, width, height);
     }
 
+    /**
+     * Initialize the image with a texture
+     *
+     * @param surface texture
+     */
     public void initialize(Surface surface)
     {
         initialize(surface, surface.w, surface.h, 0);
     }
 
+    /**
+     * Initialize with part of texture
+     *
+     * @param surface      texture
+     * @param width        width of part
+     * @param height       height of part
+     * @param currentFrame the nrd square with specified dimension
+     */
     public void initialize(Surface surface, int width, int height,
-            int currentFrame)
+                           int currentFrame)
     {
         this.cols = surface.w / width;
         this.currentFrame = currentFrame;
@@ -484,6 +629,15 @@ public class Image implements Cloneable
         endFrame = cols * surface.h / height;
     }
 
+    /**
+     * Initialize image from part of texture
+     *
+     * @param surface texture
+     * @param x       left top x coordinate of the start of part of texture
+     * @param y       left top y coordiante of the start of part of texture
+     * @param width   width of part
+     * @param height  height of part
+     */
     public void initialize(Surface surface, int x, int y, int width, int height)
     {
         this.cols = surface.w / width;

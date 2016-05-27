@@ -16,27 +16,36 @@ import org.lwjgl.BufferUtils;
 
 import org.cora.maths.Vector2D;
 
+/**
+ * Render text using font
+ */
 public class TextRenderer implements Cloneable
 {
-    public static final int TAB_SIZE         = 4;
-    public static final int UNDERLINE        = 95;
-    public static final int DIST_SPACING     = 5;
+    public static final int TAB_SIZE = 4;
+    public static final int UNDERLINE = 95;
+    public static final int DIST_SPACING = 5;
     public static final int VERTICAL_SPACING = 5;
 
-    private Font            font;
-    private int             maxWidth;
-    private myColor         fontColor;
-    private myColor         backColor;
-    private int             distSpacing;
-    private int             verticalSpacing;
-    private boolean         isUnderlined;
-    private int             tabSize;
-    private Alignement      align;
-    private float           scale;
-    private boolean         isProportional;
+    private Font font;
+    private int maxWidth;
+    private myColor fontColor;
+    private myColor backColor;
+    private int distSpacing;
+    private int verticalSpacing;
+    private boolean isUnderlined;
+    private int tabSize;
+    private Alignement align;
+    private float scale;
+    private boolean isProportional;
+    private FontPosition fontPosition;
 
-    private int             x, y;
+    private int x, y;
 
+    /**
+     * Create texteRenderer using font
+     *
+     * @param font used font
+     */
     public TextRenderer(Font font)
     {
         this.font = font;
@@ -53,7 +62,7 @@ public class TextRenderer implements Cloneable
         y = 0;
         align = Alignement.LEFT;
     }
-    
+
     @Override
     public Object clone()
     {
@@ -66,39 +75,61 @@ public class TextRenderer implements Cloneable
         {
             e.printStackTrace();
         }
-        
+
         text.align = align;
         text.fontColor = (myColor) fontColor.clone();
         text.backColor = (myColor) backColor.clone();
         text.font = font;
-        
+
         return text;
     }
-    
+
+    /**
+     * Render text on screen
+     *
+     * @param g      tool rendering
+     * @param string text to render
+     */
     public void print(Graphics g, String string)
     {
         print(g, string, x, y);
     }
 
+    /**
+     * Create an image
+     *
+     * @param string text to render
+     *
+     * @return created text image
+     */
     public Image transformToImage(String string)
     {
         return transformToImage(string, x, y);
     }
 
+    /**
+     * Create an image
+     *
+     * @param string text to render
+     * @param x      image coordinate
+     * @param y      image coordinate
+     *
+     * @return created text image
+     */
     public Image transformToImage(String string, int x, int y)
     {
         ArrayList<String> strs = new ArrayList<String>();
         ArrayList<Integer> widths = new ArrayList<Integer>();
         ArrayList<Alignement> aligns = new ArrayList<Alignement>();
-        
+
         Image text = new Image();
         Surface surface = new Surface();
-        
+
         Alignement align = this.align;
         int x0 = 0;
         int y0 = 0;
         int height = getFontHeight();
-        
+
         if (align != Alignement.LEFT && maxWidth != 0)
         {
             surface.w = maxWidth;
@@ -107,7 +138,7 @@ public class TextRenderer implements Cloneable
         {
             align = Alignement.LEFT;
         }
-        
+
         transformToStrs(string, strs, widths, aligns, align);
 
         surface.h = strs.size() * getFontHeight();
@@ -122,7 +153,7 @@ public class TextRenderer implements Cloneable
                     surface.w = widths.get(i);
             }
         }
-        
+
         surface.pixels = BufferUtils.createByteBuffer(surface.w * surface.h
                 * surface.BytesPerPixel);
         surface.textureName = font.getName() + "-image";
@@ -141,8 +172,15 @@ public class TextRenderer implements Cloneable
         return text;
     }
 
+    /**
+     * @param string fullText
+     * @param strs   array of texts
+     * @param widths array of width
+     * @param aligns array of alignement
+     * @param align  align type
+     */
     public void transformToStrs(String string, ArrayList<String> strs,
-            ArrayList<Integer> widths, ArrayList<Alignement> aligns, Alignement align)
+                                ArrayList<Integer> widths, ArrayList<Alignement> aligns, Alignement align)
     {
         if (string.length() == 0)
             return;
@@ -184,7 +222,7 @@ public class TextRenderer implements Cloneable
             {
                 lastC = c;
                 c = string.charAt(i);
-                
+
                 switch (c)
                 {
                     case ' ':
@@ -255,7 +293,7 @@ public class TextRenderer implements Cloneable
                                 int tmp = getFontWidth(c);
                                 widthWord.v -= tmp;
                                 word.setLength(word.length() - 1);
-                                
+
                                 flush(widthWord, width, word, sentence);
 
                                 strs.add(removeStartEnd(sentence, width));
@@ -263,10 +301,10 @@ public class TextRenderer implements Cloneable
                                 aligns.add(align);
 
                                 reset(width, sentence);
-                                
+
                                 widthWord.v += tmp;
                                 word.append(c);
-                                
+
                                 y += height;
                             }
                             else
@@ -290,6 +328,14 @@ public class TextRenderer implements Cloneable
         }
     }
 
+    /**
+     * Render text on screen
+     *
+     * @param g      tool rendering
+     * @param string text to render
+     * @param x screen position
+     * @param y screen position
+     */
     public void print(Graphics g, String string, int x, int y)
     {
         if (string.length() == 0)
@@ -400,15 +446,15 @@ public class TextRenderer implements Cloneable
                                 int tmp = getFontWidth(c);
                                 widthWord.v -= tmp;
                                 word.setLength(word.length() - 1);
-                                
+
                                 flush(widthWord, width, word, sentence);
                                 printLine(g, removeStartEnd(sentence, width),
                                         x, y, width.v, align);
                                 reset(width, sentence);
-                                
+
                                 widthWord.v += tmp;
                                 word.append(c);
-                                
+
                                 y += height;
                             }
                             else
@@ -430,7 +476,7 @@ public class TextRenderer implements Cloneable
     }
 
     private void flush(IntA widthWord, IntA width, StringBuilder word,
-            StringBuilder sentence)
+                       StringBuilder sentence)
     {
         if (widthWord.v == 0)
             return;
@@ -447,6 +493,12 @@ public class TextRenderer implements Cloneable
         width.v = 0;
     }
 
+    /**
+     * Remove space at the end and the start of the text
+     * @param sb text
+     * @param width update width
+     * @return string result
+     */
     public String removeStartEnd(StringBuilder sb, IntA width)
     {
         if (sb.length() == 0)
@@ -479,7 +531,7 @@ public class TextRenderer implements Cloneable
     }
 
     private void printLine(ByteBuffer pixels, String string, int x, int y,
-            int width, int surfaceWidth, Alignement alignement, int bytePerPixel)
+                           int width, int surfaceWidth, Alignement alignement, int bytePerPixel)
     {
         float x0, y0;
         float distSpace = getFontWidth(' ');
@@ -602,13 +654,13 @@ public class TextRenderer implements Cloneable
     }
 
     private void printLine(Graphics g, String string, int x, int y,
-            float width, Alignement alignement)
+                           float width, Alignement alignement)
     {
         float x0, y0;
         float distSpace = getFontWidth(' ');
         float distWord = getWordSpacing();
         y0 = y;
-        
+
         switch (alignement)
         {
             case LEFT:
@@ -652,23 +704,23 @@ public class TextRenderer implements Cloneable
                 x0 = x;
                 break;
         }
-        
+
         glPushMatrix();
         glTranslatef(x0, y0, 0);
-        
+
         x0 = 0;
         y0 = 0;
         glScalef(scale, scale, 1.0f);
-        
+
         if (isBackVisible())
         {
             g.setColor(backColor);
             g.fillRec(0, 0, (int) width, getFontHeight());
         }
-        
+
         g.setColor(fontColor);
         if (isProportional)
-        {     
+        {
             char c = ' ';
             char lastC;
 
@@ -694,7 +746,7 @@ public class TextRenderer implements Cloneable
             }
         }
         else
-        {            
+        {
             char c = ' ';
             char lastC;
 
@@ -723,6 +775,11 @@ public class TextRenderer implements Cloneable
     }
 
     // Getter - Setter
+
+    /**
+     *
+     * @param scale factor scaling of the text
+     */
     public void setScale(float scale)
     {
         this.scale = scale;
@@ -732,42 +789,50 @@ public class TextRenderer implements Cloneable
     {
         return scale;
     }
-    
+
     public void setSize(int height)
     {
         setHeight(height);
     }
-    
+
     public int getSize()
     {
         return getHeight();
     }
-    
+
     public void setWidth(int width)
     {
         scale = (float) (width) / getFontWidth();
     }
-    
+
     public void setHeight(int height)
     {
         scale = (float) (height) / getFontHeight();
     }
-    
+
     public int getWidth()
     {
-        return (int) (font.getWidth()*scale);
-    }
-    
-    public int getHeight()
-    {
-        return (int) (font.getHeight()*scale);
+        return (int) (font.getWidth() * scale);
     }
 
+    public int getHeight()
+    {
+        return (int) (font.getHeight() * scale);
+    }
+
+    /**
+     *
+     * @return space between lines
+     */
     public int getVerticalSpacing()
     {
         return verticalSpacing;
     }
 
+    /**
+     *
+     * @param verticalSpacing space between lines
+     */
     public void setVerticalSpacing(int verticalSpacing)
     {
         this.verticalSpacing = verticalSpacing;
@@ -853,12 +918,12 @@ public class TextRenderer implements Cloneable
     {
         this.align = align;
     }
-    
+
     public Alignement getAlignement()
     {
         return align;
     }
-    
+
     public int getFixedWidth(String str)
     {
         return str.length() * getFontWidth();
@@ -886,7 +951,7 @@ public class TextRenderer implements Cloneable
     {
         return font.getWidth();
     }
-    
+
     public int getFontHeight()
     {
         return font.getHeight();
@@ -921,12 +986,12 @@ public class TextRenderer implements Cloneable
     {
         return backColor;
     }
-    
+
     public boolean isFontVisible()
     {
         return fontColor.a != 0;
     }
-    
+
     public boolean isBackVisible()
     {
         return backColor.a != 0;
@@ -951,10 +1016,10 @@ public class TextRenderer implements Cloneable
     {
         return distSpacing;
     }
-    
+
     public int getWordSpacing()
     {
-        return (isProportional)? distSpacing : 0;
+        return (isProportional) ? distSpacing : 0;
     }
 
     public void setUnderline(boolean u)
@@ -991,5 +1056,15 @@ public class TextRenderer implements Cloneable
     {
         this.x = x;
         this.y = y;
+    }
+
+    public void setFontPosition(FontPosition fontPosition)
+    {
+        this.fontPosition = fontPosition;
+    }
+
+    public FontPosition getFontPosition()
+    {
+        return fontPosition;
     }
 }

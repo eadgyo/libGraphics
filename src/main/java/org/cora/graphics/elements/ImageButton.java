@@ -4,6 +4,9 @@ import org.cora.graphics.base.Image;
 import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.myColor;
 
+/**
+ * Button with an image centered
+ */
 public class ImageButton extends Button
 {
     protected Image image;

@@ -61,6 +61,10 @@ public class Input
         mouseScrollCallback = new MouseScrollListener();
     }
 
+    /**
+     * Init events handling
+     * @param screen screen id
+     */
     public void initGL(long screen)
     {
         glfwSetKeyCallback(screen, keyCallback);

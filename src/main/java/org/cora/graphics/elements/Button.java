@@ -5,6 +5,9 @@ import org.cora.graphics.graphics.myColor;
 import org.cora.maths.Vector2D;
 import org.cora.maths.sRectangle;
 
+/**
+ *
+ */
 public class Button
 {
     protected myColor recColor;
@@ -13,7 +16,14 @@ public class Button
     protected boolean isActive;
     
     sRectangle rectangle;
-    
+
+    /**
+     * Create a button centered
+     * @param x centerX
+     * @param y centerY
+     * @param width length of the button
+     * @param height length of the button
+     */
     public Button(int x, int y, int width, int height)
     {
         recColor = new myColor();
@@ -23,26 +33,42 @@ public class Button
         rectangle = new sRectangle(x, y, width, height);
     }
 
+    /**
+     *
+     * @return the color of the lines of rectangle
+     */
     public myColor getRecColor()
     {
         return recColor;
     }
 
+    /**
+     *
+     * @param recColor color of the lines of the rectangle
+     */
     public void setRecColor(myColor recColor)
     {
         this.recColor.set(recColor);
     }
-    
+
     public void setRecColor(float r, float g, float b, float a)
     {
         this.recColor.set(r, g, b, a);
     }
 
+    /**
+     *
+     * @return background color of the button
+     */
     public myColor getBackColor()
     {
         return backColor;
     }
 
+    /**
+     *
+     * @param backColor background color the button
+     */
     public void setBackColor(myColor backColor)
     {
         this.backColor.set(backColor);
@@ -53,19 +79,36 @@ public class Button
         this.backColor.set(r, g, b, a);
     }
 
+    /**
+     *
+     * @return rectangle of the button
+     */
     public sRectangle getRectangle()
     {
         return rectangle;
     }
 
+    /**
+     * Change the size and coordinates of the button
+     * @param rectangle pattern
+     */
     public void setRectangle(sRectangle rectangle)
     {
         this.rectangle.set(rectangle);
     }
-    
+
+    /**
+     * Update the button if it has animation
+     * Default: no animation
+     * @param dt time since last frame
+     */
     public void update(float dt)
     {}
-    
+
+    /**
+     * Render the button using lengths, coordinates and colors
+     * @param g graphicsTools used to render the button
+     */
     public void render(Graphics g)
     {
         if (backColor.isVisible() || isActive)
@@ -84,7 +127,12 @@ public class Button
             g.drawForm(rectangle);
         }
     }
-    
+
+    /**
+     * Test if an point element is colliding
+     * @param pos position of the element that may be colliding
+     * @return result of test
+     */
     public boolean isColliding(Vector2D pos)
     {
         return rectangle.isInsideBorder(pos);

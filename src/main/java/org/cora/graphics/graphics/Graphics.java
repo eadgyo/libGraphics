@@ -89,6 +89,12 @@ public class Graphics
         return screen;
     }
 
+    /**
+     *
+     * @param windowName window name
+     * @param width width of window
+     * @param height height of window
+     */
     public void init(String windowName, int width, int height)
     {
         glfwSetErrorCallback(GLFWErrorCallback
@@ -132,6 +138,11 @@ public class Graphics
         GL.createCapabilities();
     }
 
+    /**
+     * Init GL 2D features
+     * @param width width of window
+     * @param height height of window
+     */
     public void initGL(int width, int height)
     {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Set the cleared screen colour
@@ -155,17 +166,27 @@ public class Graphics
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
+    /**
+     * Clear screen
+     */
     public void clear()
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
+    /**
+     * Swap screen buffer
+     */
     public void swapGL()
     {
         glfwSwapBuffers(screen);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
+    /**
+     * Render image on screen
+     * @param image rendered image
+     */
     public void render(Image image)
     {
         glPushMatrix();
@@ -196,11 +217,24 @@ public class Graphics
         glPopMatrix();
     }
 
+    /**
+     * Render part of texture to screen
+     * @param surface texture
+     * @param rec selection part
+     */
     public void render(Surface surface, Rect rec)
     {
         render(surface, rec.x, rec.y, rec.w, rec.h);
     }
 
+    /**
+     * Render part of texture to screen
+     * @param surface texture
+     * @param x coordinate selection part
+     * @param y coordinate selection part
+     * @param width length selection part
+     * @param height length selection part
+     */
     public void render(Surface surface, int x, int y, int width, int height)
     {
         glBindTexture(GL_TEXTURE_2D, surface.texture);
@@ -227,6 +261,10 @@ public class Graphics
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
+    /**
+     * Load texture in video memory
+     * @param surface texture
+     */
     public void loadTextureGL(Surface surface)
     {
         int texture = glGenTextures();
@@ -265,10 +303,20 @@ public class Graphics
         surface.texture = texture;
     }
 
+    /**
+     * Free texture from video memory
+     * @param texture textureId
+     */
     public void freeTexture(int texture)
     {
         glDeleteTextures(texture);
     }
+
+    /**
+     * Free texture from video memory
+     * @param surface textureId
+     */
+    public void freeTexture(Surface surface) { freeTexture(surface.texture); };
 
     // Drawing forms
     public void fillRec(int x, int y, int w, int h)

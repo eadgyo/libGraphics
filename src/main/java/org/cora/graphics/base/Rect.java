@@ -1,5 +1,8 @@
 package org.cora.graphics.base;
 
+/**
+ * Rectangle used for rendering, selecting part of a texture
+ */
 public class Rect implements Cloneable
 {
     public int x;

@@ -2,6 +2,9 @@ package org.cora.graphics.base;
 
 import org.cora.graphics.graphics.Surface;
 
+/**
+ * Holds texture information
+ */
 public class SpriteData
 {
     public Surface surface;

@@ -12,43 +12,66 @@ import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.Surface;
 import org.lwjgl.BufferUtils;
 
+/**
+ * Handle textures
+ */
 public class TextureManager
 {
     private static TextureManager INSTANCE = new TextureManager();
     private Graphics g;
     private Map<String, Surface> textures;
-    
+
     private TextureManager()
     {
         g = null;
         textures = new HashMap<String, Surface>();
     }
-    
+
     public static TextureManager getInstance()
     {
         return INSTANCE;
     }
-    
+
+    /**
+     * Set default graphics renderer
+     *
+     * @param g tool renderer
+     */
     public void init(Graphics g)
     {
         this.g = g;
     }
-    
+
     public Graphics getDefaultGraphics()
     {
         return g;
     }
-    
+
     public void setDefaultGraphics(Graphics g)
     {
         this.g = g;
     }
-    
+
+    /**
+     * Load texture from default folder
+     *
+     * @param file file relative location
+     *
+     * @return generated surface
+     */
     public Surface loadTextureFromDef(String file)
     {
         return loadTexture(ConstantManager.textureFolder + "/" + file);
     }
-    
+
+
+    /**
+     * Load texture from file
+     *
+     * @param file image location
+     *
+     * @return generated surface
+     */
     public Surface loadTexture(String file)
     {
         Surface surface = createTexture(file);
@@ -58,13 +81,25 @@ public class TextureManager
         }
         return surface;
     }
-    
+
+    /**
+     * Add texture to TextureManager's map
+     *
+     * @param surface texture
+     */
     public void addTexture(Surface surface)
     {
         surface.textureName = createName(surface.textureName);
         textures.put(surface.textureName, surface);
     }
 
+    /**
+     * Generate available name for texture
+     *
+     * @param name textureName
+     *
+     * @return generated name
+     */
     public String createName(String name)
     {
         int i = 0;
@@ -75,25 +110,32 @@ public class TextureManager
         }
         return tmpName;
     }
-    
+
     public boolean isPresent(String name)
     {
         return textures.containsKey(name);
     }
-    
+
     public Surface getTexture(String name)
     {
         return textures.get(name);
     }
-    
+
     public static Surface createTextureFromDef(String file)
     {
         return createTexture(ConstantManager.textureFolder + "/" + file);
     }
-    
+
+    /**
+     * Load and create texture from file
+     *
+     * @param file location image
+     *
+     * @return texture
+     */
     public static Surface createTexture(String file)
     {
-        File f = new File(file);            
+        File f = new File(file);
         BufferedImage image = FileManager.loadBufferedImage(f);
 
         if (image == null)
@@ -127,12 +169,12 @@ public class TextureManager
         surface.pixels.flip();
         return surface;
     }
-    
+
     public void loadAllTexturesFromDef()
     {
         loadAllTextures(ConstantManager.textureFolder);
     }
-    
+
     public void loadAllTextures(String folder)
     {
         ArrayList<String> files = FileManager.getAllFilesPath(folder, false, true);
@@ -141,7 +183,12 @@ public class TextureManager
             loadTexture(files.get(i));
         }
     }
-    
+
+    /**
+     * Free texture from textureManager and video memory
+     *
+     * @param name texture name
+     */
     public void freeTexture(String name)
     {
         Surface surface = removeFromMap(name);
@@ -150,18 +197,33 @@ public class TextureManager
             freeTextureGL(surface);
         }
     }
-    
+
+    /**
+     * Remove texture from map of textureManager withtout video memory release
+     *
+     * @param name texture name
+     *
+     * @return removed texture
+     */
     public Surface removeFromMap(String name)
     {
         return textures.remove(name);
     }
-    
+
+    /**
+     * Free texture from video memory
+     *
+     * @param surface texture
+     */
     public void freeTextureGL(Surface surface)
     {
         g.freeTexture(surface.texture);
         surface.texture = -1;
     }
-    
+
+    /**
+     * Free all texture from TextureManager and video memory
+     */
     public void freeAllTextures()
     {
         for (Entry<String, Surface> texture : textures.entrySet())

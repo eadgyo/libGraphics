@@ -11,6 +11,9 @@ import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.Surface;
 import org.cora.graphics.graphics.myColor;
 
+/**
+ * Font used to render text
+ */
 public class Font
 {
     public final static int NCHAR = 256;
@@ -27,6 +30,10 @@ public class Font
         this(NCHAR);
     }
 
+    /**
+     *
+     * @param numberChar number Of characters in font
+     */
     public Font(int numberChar)
     {
         this.surface = null;
@@ -38,6 +45,12 @@ public class Font
         }
     }
 
+    /**
+     * Create font and load the image
+     * @param surface texture
+     * @param width length of one element
+     * @param height length of one element
+     */
     public Font(Surface surface, int width, int height)
     {
         this.surface = surface;
@@ -59,6 +72,12 @@ public class Font
         computeBounds();
     }
 
+    /**
+     * Initialize font texture
+     * @param surface texture
+     * @param width length of one element
+     * @param height length of one element
+     */
     public void initialize(Surface surface, int width, int height)
     {
         initialize(surface, width, height, true);
@@ -74,6 +93,13 @@ public class Font
         initialize(surface, width, width, computeBounds);
     }
 
+    /**
+     *
+     * @param surface texture
+     * @param width length of one element
+     * @param height length of one element
+     * @param computeBounds compute the real length of each letter
+     */
     public void initialize(Surface surface, int width, int height,
             boolean computeBounds)
     {
@@ -117,6 +143,9 @@ public class Font
         }
     }
 
+    /**
+     * Compute real length of each letter
+     */
     public void computeBounds()
     {
         int row = 0;
@@ -140,11 +169,18 @@ public class Font
         }
     }
 
+    /**
+     *
+     * @param width size of space
+     */
     public void setSpaceSize(int width)
     {
         fontData[' '].width = width;
     }
 
+    /**
+     * Compute real length of one letter
+     */
     public void computeBound(int x0, int y0, FontData data)
     {
         ByteBuffer pixels = surface.pixels;
@@ -173,6 +209,11 @@ public class Font
         }
     }
 
+    /**
+     *
+     * @param c letter
+     * @return computed width of the letter
+     */
     public int getWidth(char c)
     {
         if (c < fontData.length)
@@ -191,6 +232,11 @@ public class Font
         return height;
     }
 
+    /**
+     *
+     * @param c letter
+     * @return position of the letter in the texture
+     */
     public int getXRec(char c)
     {
         if (c < fontData.length)
@@ -199,11 +245,21 @@ public class Font
             return 0;
     }
 
+    /**
+     *
+     * @param c letter
+     * @return position of the letter in the texture with fixed size
+     */
     public int getXRecFixed(char c)
     {
         return (c % cols) * getWidth();
     }
 
+    /**
+     *
+     * @param c letter
+     * @return position of the letter in the texture
+     */
     public int getYRec(char c)
     {
         return (c / cols) * getHeight();
@@ -221,6 +277,16 @@ public class Font
         return sizes;
     }
 
+    /**
+     * Render one letter
+     * @param g tool to render
+     * @param c letter
+     * @param w width
+     * @param xrec position of the letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param scale scaling factor
+     */
     private void printChar(Graphics g, char c, int w, int xrec, int x, int y,
             float scale)
     {
@@ -238,6 +304,14 @@ public class Font
         glPopMatrix();
     }
 
+    /**
+     * Render one letter
+     * @param g tool to render
+     * @param c letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param scale scaling factor
+     */
     public void print(Graphics g, char c, int x, int y, float scale)
     {
         if (c < fontData.length && !fontData[c].isEmpty)
@@ -246,6 +320,14 @@ public class Font
         }
     }
 
+    /**
+     * Render one letter with fixed size
+     * @param g tool to render
+     * @param c letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param scale scaling factor
+     */
     public void printFixedWidth(Graphics g, char c, int x, int y, float scale)
     {
         if (c < fontData.length && !fontData[c].isEmpty)
@@ -254,6 +336,15 @@ public class Font
         }
     }
 
+    /**
+     * Render one letter
+     * @param g tool to render
+     * @param c letter
+     * @param w width
+     * @param xrec position of the letter
+     * @param x rendering position
+     * @param y rendering position
+     */
     private void printChar(Graphics g, char c, int w, int xrec, int x, int y)
     {
         int h = getHeight();
@@ -267,6 +358,13 @@ public class Font
         glPopMatrix();
     }
 
+    /**
+     * Render one letter
+     * @param g tool to render
+     * @param c letter
+     * @param x rendering position
+     * @param y rendering position
+     */
     public void print(Graphics g, char c, int x, int y)
     {
         if (c < fontData.length && !fontData[c].isEmpty)
@@ -275,6 +373,13 @@ public class Font
         }
     }
 
+    /**
+     * Render one letter with fixed size
+     * @param g tool to render
+     * @param c letter
+     * @param x rendering position
+     * @param y rendering position
+     */
     public void printFixedWidth(Graphics g, char c, int x, int y)
     {
         if (c < fontData.length && !fontData[c].isEmpty)
@@ -283,6 +388,16 @@ public class Font
         }
     }
 
+    /**
+     * Render one letter on buffer wihtout alpha
+     * @param pixels render output
+     * @param c letter
+     * @param w width
+     * @param xrec position of the letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param bytesPerPixel number of bytes per pixel
+     */
     private void printChar(ByteBuffer pixels, char c, int w, int xrec, int x,
             int y, int width, int bytesPerPixel)
     {
@@ -307,6 +422,16 @@ public class Font
         }
     }
 
+    /**
+     * Render one letter on buffer with alpha support
+     * @param pixels render output
+     * @param c letter
+     * @param w width
+     * @param xrec position of the letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param bytesPerPixel number of bytes per pixel
+     */
     private void printCharAlpha(ByteBuffer pixels, char c, int w, int xrec,
             int x, int y, int width, int bytesPerPixel)
     {
@@ -342,6 +467,14 @@ public class Font
         }
     }
 
+    /**
+     * Render rectangle on render
+     * @param pixels render output
+     * @param x rendering position
+     * @param y rendering position
+     * @param bytesPerPixel number of bytes per pixel
+     * @param color back ground color
+     */
     public void printSquare(ByteBuffer pixels, int x, int y, int width,
             int height, int surfaceWidth, int bytesPerPixel, myColor color)
     {
@@ -362,6 +495,14 @@ public class Font
         }
     }
 
+    /**
+     * Render one letter on buffer with alpha support
+     * @param pixels render output
+     * @param c letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param bytesPerPixel number of bytes per pixel
+     */
     public void print(ByteBuffer pixels, char c, int x, int y, int width,
             int bytesPerPixel)
     {
@@ -376,6 +517,14 @@ public class Font
         }
     }
 
+    /**
+     * Render one letter with fixed width on buffer with alpha support
+     * @param pixels render output
+     * @param c letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param bytesPerPixel number of bytes per pixel
+     */
     public void printFixedWidth(ByteBuffer pixels, char c, int x, int y,
             int width, int bytesPerPixel)
     {
@@ -390,6 +539,18 @@ public class Font
         }
     }
 
+    /**
+     * Render one letter on buffer with alpha support
+     * @param pixels render output
+     * @param c letter
+     * @param w width
+     * @param xrec position of the letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param bytesPerPixel number of bytes per pixel
+     * @param fontColor text color
+     * @param backColor background color
+     */
     private void printCharOptimized(ByteBuffer pixels, char c, int w, int xrec,
             int x, int y, int width, int bytesPerPixel, myColor fontColor,
             myColor backColor)
@@ -444,6 +605,16 @@ public class Font
         return b & 0xFF;
     }
 
+    /**
+     * Render one letter on buffer with alpha support
+     * @param pixels render output
+     * @param c letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param bytesPerPixel number of bytes per pixel
+     * @param fontColor text color
+     * @param backColor background color
+     */
     public void printOptimized(ByteBuffer pixels, char c, int x, int y,
             int width, int bytesPerPixel, myColor fontColor, myColor backColor)
     {
@@ -454,6 +625,16 @@ public class Font
         }
     }
 
+    /**
+     * Render one letter on buffer with alpha support
+     * @param pixels render output
+     * @param c letter
+     * @param x rendering position
+     * @param y rendering position
+     * @param bytesPerPixel number of bytes per pixel
+     * @param fontColor text color
+     * @param backColor background color
+     */
     public void printFixedWidthOptimized(ByteBuffer pixels, char c, int x,
             int y, int width, int bytesPerPixel, myColor fontColor,
             myColor backColor)
@@ -464,12 +645,20 @@ public class Font
                     width, bytesPerPixel, fontColor, backColor);
         }
     }
-    
+
+    /**
+     *
+     * @return font name
+     */
     public String getName()
     {
         return name;
     }
-    
+
+    /**
+     * Change font name
+     * @param name font name
+     */
     public void setName(String name)
     {
         this.name = name;

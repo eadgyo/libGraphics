@@ -7,6 +7,9 @@ import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.myColor;
 import org.cora.graphics.manager.TextureManager;
 
+/**
+ * Button with text display
+ */
 public class TextButton extends Button
 {
     private String txt;
@@ -54,7 +57,10 @@ public class TextButton extends Button
     {
         text.setFontColor(fontColorText);
     }
-    
+
+    /**
+     * Update the text image used with preRendering
+     */
     public void updateImage()
     {
         if (textImage != null)
@@ -104,5 +110,23 @@ public class TextButton extends Button
     public void setTextRenderer(TextRenderer text)
     {
         this.text = text;
+    }
+
+    /**
+     *
+     * @param preRendering activate stored image of the text
+     */
+    public void setPreRendering(boolean preRendering)
+    {
+        this.preRendering = preRendering;
+    }
+
+    /**
+     *
+     * @return image is recalculated at each rendering
+     */
+    public boolean getPreRendering()
+    {
+        return preRendering;
     }
 }

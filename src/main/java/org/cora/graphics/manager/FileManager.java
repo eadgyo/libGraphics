@@ -11,6 +11,10 @@ import javax.imageio.ImageIO;
 public class FileManager
 {
     // Load
+
+    /**
+     * Create object, texture and font folder
+     */
     public static void createDefaultFolder()
     {
         createFolder(ConstantManager.binFolder);
