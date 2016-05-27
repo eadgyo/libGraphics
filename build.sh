@@ -25,4 +25,4 @@ then
 fi
 
 cp target/*.jar "$group/$idname/$version"
-#cp pom.xml $group/$idname/$version/$idname-$version.pom
+cp pom.xml $group/$idname/$version/$idname-$version.pom
