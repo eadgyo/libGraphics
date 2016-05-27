@@ -9,13 +9,49 @@
     <version>1.0</version>
 
     <properties>
+        <lwjgl.version>3.0.0b</lwjgl.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl</artifactId>
+            <version>${lwjgl.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-platform</artifactId>
+            <version>${lwjgl.version}</version>
+            <classifier>natives-linux</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-platform</artifactId>
+            <version>${lwjgl.version}</version>
+            <classifier>natives-windows</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-platform</artifactId>
+            <version>${lwjgl.version}</version>
+            <classifier>natives-osx</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>cora</groupId>
+            <artifactId>cora-maths</artifactId>
+            <version>1.0</version>
+        </dependency>     
+    </dependencies>
+
     <packaging>jar</packaging>
 
-    <name>Graphics</name>
+    <name>Cora Graphics</name>
     <description>Gestion du moteur graphique</description>
 
     <developers>
