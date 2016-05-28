@@ -1,12 +1,11 @@
 package org.cora.graphics.manager;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 public class FileManager
 {
@@ -21,12 +20,22 @@ public class FileManager
         createFolder(ConstantManager.textureFolder);
         createFolder(ConstantManager.fontFolder);
     }
-    
+
+    /**
+     * Create a bufferImage from default location path
+     * @param file location path
+     * @return created bufferedImage
+     */
     public static BufferedImage loadBufferedImageFromDef(String file)
     {
         return loadBufferedImage(ConstantManager.textureFolder + "/" + file);
     }
 
+    /**
+     * Create a bufferImage from a file
+     * @param file image file
+     * @return created bufferedImage
+     */
     public static BufferedImage loadBufferedImage(File file)
     {
         BufferedImage texture;
@@ -40,7 +49,12 @@ public class FileManager
         }
         return texture;
     }
-    
+
+    /**
+     * Create a bufferImage from a location path
+     * @param file location path
+     * @return created bufferedImage
+     */
     public static BufferedImage loadBufferedImage(String file)
     {
         BufferedImage texture;
@@ -55,6 +69,11 @@ public class FileManager
         return texture;
     }
 
+    /**
+     * Create a bufferImage from an url
+     * @param url image destination
+     * @return created bufferedImage
+     */
     public static BufferedImage loadBufferedImage(URL url)
     {
         BufferedImage texture;
@@ -90,7 +109,14 @@ public class FileManager
             }
         }
     }
-    
+
+    /**
+     * Get all files destination in one directory
+     * @param Directory directory location
+     * @param canCreate if the path does not exist, create the directory
+     * @param recursive recursive file seeking
+     * @return list of relative path of files
+     */
     public static ArrayList<String> getAllFilesPath(String Directory, boolean canCreate, boolean recursive)
     {
         ArrayList<String> files = new ArrayList<String>();
@@ -168,7 +194,12 @@ public class FileManager
         File file = new File(Directory);
         return file.exists() && file.isFile();
     }
-    
+
+    /**
+     * Remove extension like .png from a filename or do nothing if no extension
+     * @param name filename with extension
+     * @return name without extension
+     */
     public static String removeExtension(String name)
     {
         int i = name.length() - 1;
