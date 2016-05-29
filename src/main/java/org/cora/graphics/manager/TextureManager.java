@@ -1,16 +1,16 @@
 package org.cora.graphics.manager;
 
 
+import org.cora.graphics.graphics.Graphics;
+import org.cora.graphics.graphics.Surface;
+import org.lwjgl.BufferUtils;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.cora.graphics.graphics.Graphics;
-import org.cora.graphics.graphics.Surface;
-import org.lwjgl.BufferUtils;
 
 /**
  * Handle textures
@@ -75,6 +75,12 @@ public class TextureManager
     public Surface loadTexture(String file)
     {
         Surface surface = createTexture(file);
+
+        if (g != null)
+        {
+            loadTextureGL(surface);
+        }
+
         if (surface != null)
         {
             addTexture(surface);
@@ -208,6 +214,17 @@ public class TextureManager
     public Surface removeFromMap(String name)
     {
         return textures.remove(name);
+    }
+
+
+    /**
+     * Load texture in video memory
+     *
+     * @param surface texture
+     */
+    public void loadTextureGL(Surface surface)
+    {
+        g.loadTextureGL(surface);
     }
 
     /**
