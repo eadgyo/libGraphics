@@ -43,7 +43,7 @@ public class Graphics
             initGL(width, height);
 
         if (initTextureManager)
-            TextureManager.getInstance().init(g);
+            TextureManager.getInstance().init(this);
     }
 
     public long getScreen()
