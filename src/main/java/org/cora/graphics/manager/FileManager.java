@@ -2,8 +2,7 @@ package org.cora.graphics.manager;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -213,5 +212,64 @@ public class FileManager
             return name.substring(0, i - 1);
         
         return name;
+    }
+
+    /**
+     * Save an object in a binary file
+     * @param directory destination folder
+     * @param object saved object
+     */
+    public void saveObject(String directory, Object object)
+    {
+        try
+        {
+            FileOutputStream f_out = new FileOutputStream(directory);
+            ObjectOutputStream obj_out = new ObjectOutputStream(f_out);
+            obj_out.writeObject(object);
+            obj_out.close();
+        }
+        catch (FileNotFoundException e1)
+        {
+            e1.printStackTrace();
+        }
+        catch (IOException e1)
+        {
+            e1.printStackTrace();
+        }
+    }
+
+    /**
+     * Load an object from a binary file
+     * @param path object path
+     * @return loaded object
+     */
+    public Object loadObject(String path)
+    {
+        Object obj = null;
+
+        if(isFileExisting(path))
+        {
+            try
+            {
+                FileInputStream f_in = new FileInputStream(path);
+                ObjectInputStream obj_in = new ObjectInputStream(f_in);
+                obj = obj_in.readObject();
+                obj_in.close();
+            }
+            catch (ClassNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+        return obj;
     }
 }

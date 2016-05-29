@@ -1,20 +1,16 @@
 package org.cora.graphics.font;
 
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glScalef;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-
 import org.cora.graphics.base.Image;
 import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.Surface;
 import org.cora.graphics.graphics.myColor;
+import org.cora.maths.Vector2D;
 import org.lwjgl.BufferUtils;
 
-import org.cora.maths.Vector2D;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+
+import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Render text using font
@@ -37,7 +33,7 @@ public class TextRenderer implements Cloneable
     private Alignement align;
     private float scale;
     private boolean isProportional;
-    private FontPosition fontPosition;
+    private TextPosition textPosition;
 
     private int x, y;
 
@@ -167,7 +163,24 @@ public class TextRenderer implements Cloneable
 
         text.initialize(surface);
         text.setScale(scale);
-        text.setPos(new Vector2D(x, y));
+
+        switch (textPosition)
+        {
+            case LEFT:
+                x0 = x;
+                break;
+            case TOP_CENTER:
+                x0 = (int) (x - text.getWidth() * 0.5f);
+                break;
+            case RIGHT:
+                x0 = (int) (x - text.getWidth());
+                break;
+            default:
+                x0 = x;
+        }
+        y0 = y;
+
+        text.setLeftPos(new Vector2D(x0, y0));
 
         return text;
     }
@@ -356,7 +369,26 @@ public class TextRenderer implements Cloneable
                 str = strsNL[i];
                 width = getWidth(strsNL[i]);
 
-                printLine(g, str, x, y, width, align);
+                int x0;
+                int y0;
+
+                switch (textPosition)
+                {
+                    case LEFT:
+                        x0 = x;
+                        break;
+                    case TOP_CENTER:
+                        x0 = (int) (x - width * 0.5f);
+                        break;
+                    case RIGHT:
+                        x0 = (int) (x - width);
+                        break;
+                    default:
+                        x0 = x;
+                }
+                y0 = y;
+
+                printLine(g, str, x0, y0, width, align);
                 y += height;
             }
         }
@@ -580,6 +612,7 @@ public class TextRenderer implements Cloneable
                 x0 = x;
                 break;
         }
+
         if (isProportional)
         {
             char c = ' ';
@@ -608,6 +641,9 @@ public class TextRenderer implements Cloneable
                                 font.printSquare(pixels, (int) x0, (int) y0, (int) distWord, getFontHeight(), surfaceWidth, bytePerPixel, backColor);
                             x0 += distWord;
                         }
+
+
+                        //font.print(pixels, c, (int) x0, (int) y0, surfaceWidth, 4);
                         font.printOptimized(pixels, c, (int) x0, (int) y0,
                                 surfaceWidth, bytePerPixel, fontColor, backColor);
                         x0 += getProportionalWidth(c);
@@ -661,13 +697,27 @@ public class TextRenderer implements Cloneable
         float distWord = getWordSpacing();
         y0 = y;
 
-        switch (alignement)
+        switch (textPosition)
         {
             case LEFT:
                 x0 = x;
                 break;
-            case FULL:
+            case TOP_CENTER:
+                x0 = (int) (x - maxWidth * 0.5f);
+                break;
+            case RIGHT:
+                x0 = (int) (x - maxWidth);
+                break;
+            default:
                 x0 = x;
+        }
+        y0 = y;
+
+        switch (alignement)
+        {
+            case LEFT:
+                break;
+            case FULL:
                 int nSpace = 0;
                 for (int i = 0; i < string.length(); i++)
                 {
@@ -695,13 +745,12 @@ public class TextRenderer implements Cloneable
                 width = maxWidth;
                 break;
             case TOP_CENTER:
-                x0 = x + (maxWidth / scale - width) * 0.5f;
+                x0 += (maxWidth / scale - width) * 0.5f;
                 break;
             case RIGHT:
-                x0 = x + maxWidth / scale - width;
+                x0 += maxWidth / scale - width;
                 break;
             default:
-                x0 = x;
                 break;
         }
 
@@ -1058,13 +1107,13 @@ public class TextRenderer implements Cloneable
         this.y = y;
     }
 
-    public void setFontPosition(FontPosition fontPosition)
+    public void setTextPosition(TextPosition textPosition)
     {
-        this.fontPosition = fontPosition;
+        this.textPosition = textPosition;
     }
 
-    public FontPosition getFontPosition()
+    public TextPosition getTextPosition()
     {
-        return fontPosition;
+        return textPosition;
     }
 }

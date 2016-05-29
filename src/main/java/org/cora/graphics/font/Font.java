@@ -1,15 +1,12 @@
 package org.cora.graphics.font;
 
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glScalef;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-
-import java.nio.ByteBuffer;
-
 import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.Surface;
 import org.cora.graphics.graphics.myColor;
+
+import java.nio.ByteBuffer;
+
+import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Font used to render text
@@ -577,7 +574,7 @@ public class Font
 
                 v = unsignedToBytes(surface.pixels.get(offset2 + bytesPerPixel
                         - 1));
-                alpha = (v / 255) * fontColor.a;
+                alpha = ((float) v / 255) * fontColor.a;
 
                 if (alpha == 0)
                 {

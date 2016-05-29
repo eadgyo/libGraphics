@@ -1,8 +1,8 @@
 package org.cora.graphics.test;
 
 import org.cora.graphics.base.Image;
-import org.cora.graphics.font.Alignement;
 import org.cora.graphics.font.Font;
+import org.cora.graphics.font.TextPosition;
 import org.cora.graphics.font.TextRenderer;
 import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.Surface;
@@ -33,15 +33,15 @@ public class Main
         font.setSpaceSize(20);
 
         TextRenderer text = new TextRenderer(font);
-        text.setProportional(false);
+        text.setTextPosition(TextPosition.LEFT);
         //text.setProportionalSpacing(10);
         text.setMaxWidth(200);
 
-        text.setFontColor(myColor.WHITE(1.0f));
-        text.setBackColor(myColor.BLUE(0.5f));
-        text.setAlignement(Alignement.FULL);
+        //text.setFontColor(myColor.WHITE(1.0f));
+        //text.setBackColor(myColor.BLUE(0.5f));
+        //text.setAlignement(Alignement.FULL);
 
-        Image textImage = text.transformToImage("Je suis assez fort pour soulever une voiture! \n Bonjour", 250, 250);
+        Image textImage = text.transformToImage("Je suis assez fort pour! \n Bonjour", 0, 0);
         g.loadTextureGL(textImage.getSpriteData().surface);
 
         while (glfwWindowShouldClose(g.getScreen()) == GL_FALSE)
@@ -51,8 +51,8 @@ public class Main
             g.clear();
             g.setColor(myColor.WHITE());
 
-            //text.print(g, "Bonjour je m'appelle Rodrigo DeSanchez, je suis le plus beau des princes.\n\t Hier j'ai copulé avec Madry.", 0, 0);
-            g.render(textImage);
+            text.print(g, "Bonjour je m'appelle Rodrigo DeSanchez, je suis le plus beau des princes.\n\t Hier j'ai copulé avec Madry.", 0, 0);
+            //g.render(textImage);
 
             input.update();
 
