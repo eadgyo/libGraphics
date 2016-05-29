@@ -3,6 +3,7 @@ package org.cora.graphics.graphics;
 import org.cora.graphics.base.Image;
 import org.cora.graphics.base.Rect;
 import org.cora.graphics.base.SpriteData;
+import org.cora.graphics.manager.TextureManager;
 import org.cora.maths.Form;
 import org.cora.maths.Rectangle;
 import org.cora.maths.Vector2D;
@@ -24,6 +25,25 @@ public class Graphics
     public Graphics()
     {
         screen = NULL;
+    }
+
+    /**
+     * Create Tool renderer
+     * @param windowName name of the created window
+     * @param width width of the window
+     * @param height height of the window
+     * @param initGL initGL 2D
+     * @param initTextureManager set textureManager default tool renderer
+     */
+    public Graphics(String windowName, int width, int height, boolean initGL, boolean initTextureManager)
+    {
+        init(windowName, width, height);
+
+        if (initGL)
+            initGL(width, height);
+
+        if (initTextureManager)
+            TextureManager.getInstance().init(g);
     }
 
     public long getScreen()
