@@ -1,7 +1,9 @@
 package org.cora.graphics.elements;
 
 import org.cora.graphics.base.Image;
+import org.cora.graphics.font.Alignement;
 import org.cora.graphics.font.Font;
+import org.cora.graphics.font.TextPosition;
 import org.cora.graphics.font.TextRenderer;
 import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.myColor;
@@ -15,7 +17,7 @@ public class TextButton extends Button
     private String txt;
     private TextRenderer text;
     private Image textImage = null;
-    private boolean preRendering = true;
+    private boolean preRendering = false;
     
     public TextButton(int x, int y, int width, int height, TextRenderer text)
     {
@@ -41,6 +43,8 @@ public class TextButton extends Button
     
         text = new TextRenderer(font);
         text.setFontColor(textColor);
+        text.setTextPosition(TextPosition.TOP_CENTER);
+        text.setAlignement(Alignement.TOP_CENTER);
     }
     
     public TextButton(int x, int y, int width, int height, Font font)
@@ -67,7 +71,7 @@ public class TextButton extends Button
         {
             TextureManager.getInstance().freeTexture(textImage.getSpriteData().surface.textureName);
         }
-        
+
         textImage = text.transformToImage(txt);
         
         if (textImage != null)
@@ -79,7 +83,9 @@ public class TextButton extends Button
     public void render(Graphics g)
     {    
         super.render(g);
-        
+
+        g.translate(getLeft());
+
         if (preRendering)
         {
             if (textImage == null)
@@ -88,8 +94,10 @@ public class TextButton extends Button
         }
         else
         {
-            text.print(g, txt, (int) getCenterX(), (int) getCenterY());
+            text.print(g, txt, (int) (getWidth()*0.5f), (int) (getHeight()*0.5f - text.getHeight()*0.5f));
         }
+
+        g.translate(getLeft().multiply(-1));
     }
     
     public String getTxt()

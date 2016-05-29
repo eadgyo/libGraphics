@@ -704,10 +704,10 @@ public class TextRenderer implements Cloneable
                 x0 = x;
                 break;
             case TOP_CENTER:
-                x0 = (int) (x - maxWidth * 0.5f);
+                x0 = (int) (x + ((maxWidth == 0) ? width : maxWidth) * 0.5f);
                 break;
             case RIGHT:
-                x0 = (int) (x - maxWidth);
+                x0 = (int) (x + ((maxWidth == 0) ? width : maxWidth));
                 break;
             default:
                 x0 = x;

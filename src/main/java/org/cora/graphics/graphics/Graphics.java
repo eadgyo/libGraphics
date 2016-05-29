@@ -337,4 +337,54 @@ public class Graphics
     {
         glLineWidth(s);
     }
+
+    public void translate(Vector2D vec)
+    {
+        glTranslatef(vec.x, vec.y, 0);
+    }
+
+    public void translate(float x, float y)
+    {
+        glTranslatef(x, y, 0);
+    }
+
+    public void translateX(float x)
+    {
+        glTranslatef(x, 0, 0);
+    }
+
+    public void translateY(float y)
+    {
+        glTranslatef(0, y, 0);
+    }
+
+    public void scale(float factor)
+    {
+        glScalef(factor, factor, 1);
+    }
+
+    public void rotate(float rad)
+    {
+        glRotatef(rad, 0, 0, 0);
+    }
+
+    public void rotate(float rad, float x, float y)
+    {
+        glRotatef(rad, x, y, 0);
+    }
+
+    public void rotate(float rad, Vector2D vec)
+    {
+        glRotatef(rad, vec.x, vec.y, 0);
+    }
+
+    public void pushMatrix()
+    {
+        glPushMatrix();
+    }
+
+    public void popMatrix()
+    {
+        glPopMatrix();
+    }
 }
