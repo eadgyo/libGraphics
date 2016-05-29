@@ -57,6 +57,7 @@ public class TextRenderer implements Cloneable
         x = 0;
         y = 0;
         align = Alignement.LEFT;
+        textPosition = TextPosition.LEFT;
     }
 
     @Override
