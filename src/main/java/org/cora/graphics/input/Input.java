@@ -1,13 +1,12 @@
 package org.cora.graphics.input;
 
+import org.cora.maths.Vector2D;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWScrollCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
-
-import org.cora.maths.Vector2D;
 
 public class Input
 {
@@ -361,8 +360,6 @@ public class Input
         {
             mouseWheelX = (int) xoffset;
             mouseWheelY = (int) yoffset;
-
-            System.out.println("o->" + yoffset);
 
             mouseScrolls = true;
         }

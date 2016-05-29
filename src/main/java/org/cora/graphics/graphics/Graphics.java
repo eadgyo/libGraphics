@@ -53,6 +53,32 @@ public class Graphics
 
     /**
      *
+     * @return state of window
+     */
+    public boolean isTerminated()
+    {
+        return (glfwWindowShouldClose(screen) == GL_TRUE);
+    }
+
+    /**
+     *
+     * @return state of window
+     */
+    public boolean isNotTerminated()
+    {
+        return (glfwWindowShouldClose(screen) == GL_FALSE);
+    }
+
+    /**
+     * Close the window
+     */
+    public void terminate()
+    {
+        glfwSetWindowShouldClose(screen, GL_TRUE);
+    }
+
+    /**
+     *
      * @param windowName window name
      * @param width width of window
      * @param height height of window
