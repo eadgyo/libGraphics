@@ -205,7 +205,7 @@ public class FileManager
         
         while (i > -1 && name.charAt(i) != '.')
         {
-            i++;
+            i--;
         }
         
         if (i != -1)
