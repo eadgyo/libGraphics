@@ -7,6 +7,7 @@ import org.lwjgl.BufferUtils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,10 +70,10 @@ public class TextureManager
      * Load texture from file
      *
      * @param file image location
-     *
+     * @param isInternal in jar
      * @return generated surface
      */
-    public Surface loadTexture(String file)
+    public Surface loadTexture(String file, boolean isInternal)
     {
         Surface surface = createTexture(file);
 
@@ -86,6 +87,17 @@ public class TextureManager
             addTexture(surface);
         }
         return surface;
+    }
+
+    /**
+     * Load texture from internal file
+     *
+     * @param file image location
+     * @return generated surface
+     */
+    public Surface loadTexture(String file)
+    {
+        return loadTexture(file, true);
     }
 
     /**
@@ -139,19 +151,56 @@ public class TextureManager
      *
      * @return texture
      */
-    public static Surface createTexture(String file)
+    private static Surface createTexture(String file, boolean isInternal)
     {
-        File f = new File(file);
-        BufferedImage image = FileManager.loadBufferedImage(f);
+        if (isInternal)
+        {
+            URL url = FileManager.getInternalURL(file);
+            BufferedImage image = FileManager.loadBufferedImage(file, true);
 
-        if (image == null)
-            return null;
+            if (image == null)
+                return null;
 
+            Surface surface = transformToImage(image);
+            surface.textureName = url.getFile();
+            return surface;
+        }
+        else
+        {
+            File f = new File(file);
+            BufferedImage image = FileManager.loadBufferedImage(f);
+
+            if (image == null)
+                return null;
+
+            Surface surface = transformToImage(image);
+            surface.textureName = f.getName();
+            return surface;
+        }
+    }
+
+    private static Surface createTexture(String file)
+    {
+        return createTexture(file, true);
+    }
+
+    public Surface createTexture(int width, int height)
+    {
+        Surface surface = g.createTexture(width, height);
+        if (surface != null)
+        {
+            addTexture(surface);
+        }
+        return surface;
+    }
+
+    public static Surface transformToImage(BufferedImage image)
+    {
         Surface surface = new Surface();
         surface.w = image.getWidth();
         surface.h = image.getHeight();
         surface.BytesPerPixel = 4;// image.getType();
-        surface.textureName = f.getName();
+
 
         int[] pixels = new int[image.getWidth() * image.getHeight()];
         image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0,

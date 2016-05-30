@@ -659,6 +659,19 @@ public class Image implements Cloneable
         g.render(this);
     }
 
+    public void draw(Graphics g, Image image)
+    {
+        draw(g, image.getSpriteData().surface);
+    }
+
+    public void draw(Graphics g, Surface surface)
+    {
+        if (spriteData.surface == null || color.a < 0.01f)
+            return;
+
+        g.render(this, surface);
+    }
+
     // /////////////////////////////
     // Transformations //
     // /////////////////////////////

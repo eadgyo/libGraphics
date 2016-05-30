@@ -3,6 +3,7 @@ package org.cora.graphics.graphics;
 import org.cora.graphics.base.Image;
 import org.cora.graphics.base.Rect;
 import org.cora.graphics.base.SpriteData;
+import org.cora.graphics.manager.FileManager;
 import org.cora.graphics.manager.TextureManager;
 import org.cora.maths.Form;
 import org.cora.maths.Rectangle;
@@ -16,11 +17,15 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.GL_TEXTURE_BASE_LEVEL;
 import static org.lwjgl.opengl.GL12.GL_TEXTURE_MAX_LEVEL;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
+import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Graphics
 {
     private long              screen;
+    int width;
+    int height;
 
     public Graphics()
     {
@@ -33,17 +38,20 @@ public class Graphics
      * @param width width of the window
      * @param height height of the window
      * @param initGL initGL 2D
-     * @param initTextureManager set textureManager default tool renderer
+     * @param initManager init others
      */
-    public Graphics(String windowName, int width, int height, boolean initGL, boolean initTextureManager)
+    public Graphics(String windowName, int width, int height, boolean initGL, boolean initManager, Class main)
     {
         init(windowName, width, height);
 
         if (initGL)
-            initGL(width, height);
+            initGL();
 
-        if (initTextureManager)
+        if (initManager)
+        {
             TextureManager.getInstance().init(this);
+            FileManager.init(main);
+        }
     }
 
     public long getScreen()
@@ -85,6 +93,9 @@ public class Graphics
      */
     public void init(String windowName, int width, int height)
     {
+        this.width = width;
+        this.height = height;
+
         glfwSetErrorCallback(GLFWErrorCallback
                 .createPrint(System.err));
 
@@ -128,10 +139,8 @@ public class Graphics
 
     /**
      * Init GL 2D features
-     * @param width width of window
-     * @param height height of window
      */
-    public void initGL(int width, int height)
+    public void initGL()
     {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Set the cleared screen colour
         // to black
@@ -203,6 +212,52 @@ public class Graphics
         render(sd.surface, sd.rect);
 
         glPopMatrix();
+    }
+
+
+    /**
+     * Render image on texture
+     * @param image rendered image
+     * @param surface render dest
+     */
+    public void render(Image image, Surface surface)
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, surface.texture);
+        glViewport(0, 0, surface.w, surface.h);
+        image.draw(this);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, width, height);
+    }
+
+    /**
+     * Create empty GL texture
+     * @param width texture length
+     * @param height texture length
+     * @return created texture
+     */
+    public Surface createTexture(int width, int height)
+    {
+        Surface surface = new Surface();
+        surface.w = width;
+        surface.h = height;
+        surface.BytesPerPixel = 4;
+        surface.pixels = null;
+        surface.textureName = "Created-texture";
+        surface.pixels = null;
+        loadTextureGL(surface);
+
+        return surface;
+    }
+
+    /**
+     * Create image with empty GL texture
+     * @param width texture length
+     * @param height texture length
+     * @return created image
+     */
+    public Image createImage(int width, int height)
+    {
+        return new Image(createTexture(width, height));
     }
 
     /**

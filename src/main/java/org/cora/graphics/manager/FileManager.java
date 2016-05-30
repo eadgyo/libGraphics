@@ -10,6 +10,13 @@ public class FileManager
 {
     // Load
 
+    private static Class main = null;
+
+    public static void init(Class mainClass)
+    {
+        main = mainClass;
+    }
+
     /**
      * Create object, texture and font folder
      */
@@ -50,16 +57,43 @@ public class FileManager
     }
 
     /**
-     * Create a bufferImage from a location path
+     * Create a bufferImage from a internal path
      * @param file location path
      * @return created bufferedImage
      */
     public static BufferedImage loadBufferedImage(String file)
     {
+        return loadBufferedImage(file, true);
+    }
+
+    /**
+     * Get url from a internal path
+     * @param file location path
+     * @return created bufferedImage
+     */
+    public static URL getInternalURL(String file)
+    {
+        return main.getResource(file);
+    }
+
+    /**
+     * Create a bufferImage from a location path
+     * @param file location path
+     * @param isInternal in jar
+     * @return created bufferedImage
+     */
+    public static BufferedImage loadBufferedImage(String file, boolean isInternal)
+    {
         BufferedImage texture;
         try
         {
-            texture = ImageIO.read(new File(file));
+            if(isInternal)
+            {
+                URL url = main.getResource(file);
+                texture = ImageIO.read(url);
+            }
+            else
+                texture = ImageIO.read(new File(file));
         }
         catch (IOException e)
         {

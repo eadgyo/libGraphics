@@ -19,16 +19,12 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Graphics g = new Graphics();
-        g.init("B2OBA", 800, 600);
-        g.initGL(800, 600);
-        TextureManager.getInstance().init(g);
-
+        Graphics g = new Graphics("B2OBA", 800, 600, true, true, Main.class);
 
         Input input = new Input();
         input.initGL(g.getScreen());
 
-        Surface textFontSurface = TextureManager.createTextureFromDef("font.bmp");
+        Surface textFontSurface = TextureManager.getInstance().loadTexture("/font.bmp");
 
         g.loadTextureGL(textFontSurface);
 
