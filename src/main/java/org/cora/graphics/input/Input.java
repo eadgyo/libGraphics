@@ -113,12 +113,12 @@ public class Input
         return mousePressed;
     }
 
-    public boolean getMouseDown(int n)
+    public boolean isMouseDown(int n)
     {
         return mouseButtonsDown[n];
     }
 
-    public boolean getMousePressed(int n)
+    public boolean isMousePressed(int n)
     {
         return mouseButtonsPressed[n];
     }
@@ -149,12 +149,12 @@ public class Input
         return keyPressed;
     }
 
-    public boolean getKeyDown(int n)
+    public boolean isKeyDown(int n)
     {
         return keysDown[n];
     }
 
-    public boolean getKeyPressed(int n)
+    public boolean isKeyPressed(int n)
     {
         return keysPressed[n];
     }
