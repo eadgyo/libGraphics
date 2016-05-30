@@ -10,6 +10,7 @@ import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.Surface;
 import org.cora.graphics.graphics.myColor;
 import org.cora.graphics.input.Input;
+import org.cora.graphics.manager.FileManager;
 import org.cora.graphics.manager.TextureManager;
 
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
@@ -19,7 +20,8 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Graphics g = new Graphics("B2OBA", 800, 600, true, true, Main.class);
+        Graphics g = new Graphics("B2OBA", 800, 600, true, true);
+        FileManager.init(Main.class);
 
         Input input = new Input();
         input.initGL(g.getScreen());

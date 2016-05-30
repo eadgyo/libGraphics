@@ -3,7 +3,6 @@ package org.cora.graphics.graphics;
 import org.cora.graphics.base.Image;
 import org.cora.graphics.base.Rect;
 import org.cora.graphics.base.SpriteData;
-import org.cora.graphics.manager.FileManager;
 import org.cora.graphics.manager.TextureManager;
 import org.cora.maths.Form;
 import org.cora.maths.Rectangle;
@@ -40,7 +39,7 @@ public class Graphics
      * @param initGL initGL 2D
      * @param initManager init others
      */
-    public Graphics(String windowName, int width, int height, boolean initGL, boolean initManager, Class main)
+    public Graphics(String windowName, int width, int height, boolean initGL, boolean initManager)
     {
         init(windowName, width, height);
 
@@ -50,7 +49,6 @@ public class Graphics
         if (initManager)
         {
             TextureManager.getInstance().init(this);
-            FileManager.init(main);
         }
     }
 
