@@ -222,9 +222,27 @@ public class Graphics
      */
     public void render(Image image, Surface surface)
     {
+        setOutpout(surface);
+        image.draw(this);
+        resetOuput();
+
+    }
+
+    /**
+     * Change output renderer
+     * @param surface output
+     */
+    public void setOutpout(Surface surface)
+    {
         glBindFramebuffer(GL_FRAMEBUFFER, surface.texture);
         glViewport(0, 0, surface.w, surface.h);
-        image.draw(this);
+    }
+
+    /**
+     * Reset output to window output
+     */
+    public void resetOuput()
+    {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glViewport(0, 0, width, height);
     }
