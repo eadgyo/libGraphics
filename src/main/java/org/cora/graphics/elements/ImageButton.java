@@ -19,7 +19,12 @@ public class ImageButton extends Button
     
     public void render(Graphics g)
     {
-        if (isActive)
+        if (!isActive)
+            return;
+
+        super.render(g);
+
+        if (isHighlighted)
         {
             myColor savedColor = image.getColor();
             image.setColor(savedColor.add(addColor));
@@ -28,7 +33,5 @@ public class ImageButton extends Button
         }
         else
             image.draw(g);
-        
-        super.render(g);
     }
 }

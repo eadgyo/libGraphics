@@ -13,6 +13,7 @@ public class Button
     protected myColor recColor;
     protected myColor backColor;
     protected myColor addColor;
+    protected boolean isHighlighted;
     protected boolean isActive;
     
     sRectangle rectangle;
@@ -29,7 +30,8 @@ public class Button
         recColor = new myColor();
         addColor = myColor.WHITE(0.2f);
         backColor = myColor.GREY();
-        isActive = false;
+        isHighlighted = false;
+        isActive = true;
         rectangle = new sRectangle(x, y, width, height);
     }
 
@@ -111,9 +113,12 @@ public class Button
      */
     public void render(Graphics g)
     {
-        if (backColor.isVisible() || isActive)
+        if (!isActive)
+            return;
+
+        if (backColor.isVisible() || isHighlighted)
         {
-            if (isActive)
+            if (isHighlighted)
                 g.setColor(backColor.add(addColor));
             else
                 g.setColor(backColor);
@@ -135,7 +140,7 @@ public class Button
      */
     public boolean isColliding(Vector2D pos)
     {
-        return rectangle.isInsideBorder(pos);
+        return (isActive) ? rectangle.isInsideBorder(pos) : false;
     }
     
     public myColor getAddColor()
@@ -143,19 +148,23 @@ public class Button
         return addColor;
     }
 
+    /**
+     * Set highlighted color
+     * @param addColor color + addColor
+     */
     public void setAddColor(myColor addColor)
     {
         this.addColor.set(addColor);
     }
 
-    public boolean isActive()
+    public boolean isHighlighted()
     {
-        return isActive;
+        return isHighlighted;
     }
 
-    public void setActive(boolean isActive)
+    public void setHighlighted(boolean isHighlighted)
     {
-        this.isActive = isActive;
+        this.isHighlighted = isHighlighted;
     }
     
     public void setX(float x)
@@ -238,4 +247,8 @@ public class Button
     {
         return rectangle.getHeight();
     }
+
+    public void setActive(boolean isActive) { this.isActive = isActive; }
+
+    public boolean getActive() { return this.isActive; }
 }

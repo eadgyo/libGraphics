@@ -19,7 +19,12 @@ public class ImagesButton extends Button
 
     public void render(Graphics g)
     {
-        if (isActive)
+        if (!isActive)
+            return;
+
+        super.render(g);
+
+        if (isHighlighted)
         {
             for (int i = 0; i < images.length; i++)
             {
@@ -36,7 +41,5 @@ public class ImagesButton extends Button
                 images[i].draw(g);
             }
         }
-
-        super.render(g);
     }
 }

@@ -170,7 +170,10 @@ public class TextButton extends Button
     }
     
     public void render(Graphics g)
-    {    
+    {
+        if (!isActive)
+            return;
+
         super.render(g);
 
         g.translate(getLeft());
