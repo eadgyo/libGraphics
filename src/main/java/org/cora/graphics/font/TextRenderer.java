@@ -171,10 +171,10 @@ public class TextRenderer implements Cloneable
                 x0 = x;
                 break;
             case TOP_CENTER:
-                x0 = (int) (x - text.getWidth() * 0.5f);
+                x0 = (int) (x - text.getWidth() * 0.5f );
                 break;
             case RIGHT:
-                x0 = (int) (x - text.getWidth());
+                x0 = (int) (x - text.getWidth() );
                 break;
             default:
                 x0 = x;
@@ -379,10 +379,10 @@ public class TextRenderer implements Cloneable
                         x0 = x;
                         break;
                     case TOP_CENTER:
-                        x0 = (int) (x - width * 0.5f);
+                        x0 = (int) (x - width * 0.5f * scale);
                         break;
                     case RIGHT:
-                        x0 = (int) (x - width);
+                        x0 = (int) (x - width * scale);
                         break;
                     default:
                         x0 = x;

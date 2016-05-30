@@ -34,19 +34,28 @@ public class Main
 
 
 
+
         Font font = new Font();
         font.initialize(textFontSurface, 32);
-        font.setSpaceSize(20);
 
         TextRenderer text = new TextRenderer(font);
         text.setTextPosition(TextPosition.TOP_CENTER);
         text.setAlignement(Alignement.TOP_CENTER);
+        //text.setWidth(512);
+        TextButton button0 = new TextButton(0, 0, 200, 200, text);
+
+        //ou
+        TextButton button = new TextButton(0, 0, 200, 200, font);
+        button.setTextBotCenter();
+        //button.getTextRenderer().setWidth(32);
+        //button.getTextRenderer().setTextPosition(TextPosition.RIGHT);
+
         text.setFontColor(myColor.RED());
         //text.setProportionalSpacing(10);
         //text.setMaxWidth(200);
 
 
-        TextButton button = new TextButton(0, 0, 200, 200, font);
+
         button.setTxt("S.E.V.R.A.N");
 
         //text.setFontColor(myColor.WHITE(1.0f));
@@ -64,14 +73,16 @@ public class Main
             g.setColor(myColor.WHITE());
 
             //text.print(g, "Bonjour je m'appelle Rodrigo DeSanchez, je suis le plus beau des princes.\n\t Hier j'ai copulé avec Madry.", 0, 0);
-            //g.render(textImage);
+
 
             button.render(g);
+
+            //g.render(textImage);
 
             input.update();
 
 
-            if (input.getKeyDown(Input.KEY_ENTER))
+            if (input.isKeyDown(Input.KEY_ENTER))
             {
                 System.out.println("Enter");
             }
