@@ -20,8 +20,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Graphics g = new Graphics("B2OBA", 800, 600, true, true);
-        FileManager.init(Main.class);
+        Graphics g = new Graphics("B2OBA", 800, 600, true, true, Main.class);
 
         Input input = new Input();
         input.initGL(g.getScreen());
