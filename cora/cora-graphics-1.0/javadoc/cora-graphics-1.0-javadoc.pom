@@ -46,7 +46,9 @@
             <groupId>cora</groupId>
             <artifactId>cora-maths</artifactId>
             <version>1.0</version>
-        </dependency>     
+        </dependency>
+
+        
     </dependencies>
 
     <repositories>
@@ -67,4 +69,34 @@
             <email>ronan.jamet@etu.univ-nantes.fr</email>
         </developer>
     </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-javadoc-plugin</artifactId>
+			    <executions>
+				    <execution>
+					    <id>attach-javadocs</id>
+					    <goals>
+						    <goal>jar</goal>
+					    </goals>
+				    </execution>
+			    </executions>
+		    </plugin>
+
+            <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-source-plugin</artifactId>
+			    <executions>
+				    <execution>
+					    <id>attach-sources</id>
+					    <goals>
+						    <goal>jar</goal>
+					    </goals>
+				    </execution>
+			    </executions>
+		    </plugin>
+        </plugins>
+    </build>
 </project>
