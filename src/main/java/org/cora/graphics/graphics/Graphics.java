@@ -262,7 +262,7 @@ public class Graphics
         surface.pixels = null;
         surface.textureName = "Created-texture";
         surface.pixels = null;
-        loadTextureGL(surface);
+        createBlankTextureGL(surface);
 
         return surface;
     }
@@ -320,6 +320,27 @@ public class Graphics
 
         // On deselectionne la Texture
         glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    /**
+     * Create blank texture
+     * @param surface texture
+     */
+    public void createBlankTextureGL(Surface surface)
+    {
+        int texture = glGenTextures();
+
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0); // Always
+        // set the base and max mipmap levels of a texture.
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+        surface.texture = texture;
     }
 
     /**
