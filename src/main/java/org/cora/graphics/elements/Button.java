@@ -12,7 +12,7 @@ public class Button
 {
     protected myColor recColor;
     protected myColor backColor;
-    protected myColor addColor;
+    protected myColor highLightColor;
     protected boolean isHighlighted;
     protected boolean isActive;
     
@@ -28,8 +28,8 @@ public class Button
     public Button(int x, int y, int width, int height)
     {
         recColor = new myColor();
-        addColor = myColor.WHITE(0.2f);
-        backColor = myColor.GREY();
+        highLightColor = myColor.WHITE(0.2f);
+        backColor = myColor.WHITE();
         isHighlighted = false;
         isActive = true;
         rectangle = new sRectangle(x, y, width, height);
@@ -119,7 +119,7 @@ public class Button
         if (backColor.isVisible() || isHighlighted)
         {
             if (isHighlighted)
-                g.setColor(backColor.add(addColor));
+                g.setColor(highLightColor);
             else
                 g.setColor(backColor);
             
@@ -140,26 +140,30 @@ public class Button
      */
     public boolean isColliding(Vector2D pos)
     {
-        return (isActive) ? rectangle.isInsideBorder(pos) : false;
+        return (isActive && rectangle.isInsideBorder(pos));
     }
     
-    public myColor getAddColor()
+    public myColor getHighLightColor()
     {
-        return addColor;
+        return highLightColor;
     }
+
+    public void setAddColor(myColor addColor) { highLightColor = backColor.add(addColor); }
+
+    public myColor getAddColor() { return highLightColor.sub(backColor);}
 
     /**
      * Set highlighted color
-     * @param addColor color + addColor
+     * @param highLightColor color + highLightColor
      */
-    public void setAddColor(myColor addColor)
+    public void setHighLightColor(myColor highLightColor)
     {
-        this.addColor.set(addColor);
+        this.highLightColor = highLightColor;
     }
 
     public boolean isHighlighted()
     {
-        return isHighlighted;
+        return (isActive && isHighlighted);
     }
 
     public void setHighlighted(boolean isHighlighted)

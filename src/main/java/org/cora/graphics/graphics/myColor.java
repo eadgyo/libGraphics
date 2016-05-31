@@ -21,12 +21,12 @@ public class myColor implements Cloneable
     {
         set(r, g, b, 1.0f);
     }
-    
+
     @Override
     public Object clone()
     {
         Object o = null;
-        
+
         try
         {
             o = super.clone();
@@ -35,7 +35,7 @@ public class myColor implements Cloneable
         {
             e.printStackTrace();
         }
-        
+
         return o;
     }
 
@@ -78,6 +78,32 @@ public class myColor implements Cloneable
         b += color;
     }
 
+    public myColor sub(myColor color)
+    {
+        return new myColor(color.r - r, color.g - g, color.b - b, color.a - a);
+    }
+
+    public myColor sub(float color)
+    {
+        return new myColor(color - r, color - g, color - b, color - a);
+    }
+
+    public void selfSub(myColor color)
+    {
+        r -= color.r;
+        a -= color.a;
+        g -= color.g;
+        b -= color.b;
+    }
+
+    public void selfSub(float color)
+    {
+        r -= color;
+        a -= color;
+        g -= color;
+        b -= color;
+    }
+
     public myColor multiply(float factor)
     {
         return new myColor(factor * r, factor * g, factor * b, factor * a);
@@ -111,7 +137,7 @@ public class myColor implements Cloneable
     {
         return (int) (get(t) * 255);
     }
-    
+
     public byte getByte(int t)
     {
         return (byte) (get(t) * 255);
@@ -133,7 +159,7 @@ public class myColor implements Cloneable
                 return 1.0f;
         }
     }
-    
+
     public boolean isVisible()
     {
         return a != 0;
@@ -158,7 +184,7 @@ public class myColor implements Cloneable
     {
         return WHITE(1.0f);
     }
-    
+
     public static myColor GREY(float a)
     {
         return new myColor(0.5f, 0.5f, 0.5f, a);
@@ -166,9 +192,8 @@ public class myColor implements Cloneable
 
     public static myColor GREY()
     {
-        return WHITE(1.0f);
+        return GREY(1.0f);
     }
-
 
     public static myColor BLUE(float a)
     {

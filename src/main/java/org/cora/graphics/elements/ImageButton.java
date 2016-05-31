@@ -27,7 +27,7 @@ public class ImageButton extends Button
         if (isHighlighted)
         {
             myColor savedColor = image.getColor();
-            image.setColor(savedColor.add(addColor));
+            image.setColor(highLightColor);
             image.draw(g);
             image.setColor(savedColor);
         }

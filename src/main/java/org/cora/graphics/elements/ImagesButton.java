@@ -29,7 +29,7 @@ public class ImagesButton extends Button
             for (int i = 0; i < images.length; i++)
             {
                 myColor savedColor = images[i].getColor();
-                images[i].setColor(savedColor.add(addColor));
+                images[i].setColor(highLightColor);
                 images[i].draw(g);
                 images[i].setColor(savedColor);
             }

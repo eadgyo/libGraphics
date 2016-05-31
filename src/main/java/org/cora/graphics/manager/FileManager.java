@@ -23,8 +23,7 @@ public class FileManager
     public static void createDefaultFolder()
     {
         createFolder(ConstantManager.binFolder);
-        createFolder(ConstantManager.textureFolder);
-        createFolder(ConstantManager.fontFolder);
+        createFolder(ConstantManager.objectsFolder);
     }
 
     /**
@@ -253,7 +252,7 @@ public class FileManager
      * @param directory destination folder
      * @param object saved object
      */
-    public void saveObject(String directory, Object object)
+    public static void saveObject(String directory, Object object)
     {
         try
         {
@@ -277,7 +276,7 @@ public class FileManager
      * @param path object path
      * @return loaded object
      */
-    public Object loadObject(String path)
+    public static Object loadObject(String path)
     {
         Object obj = null;
 
