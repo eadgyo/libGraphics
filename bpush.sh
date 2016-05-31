@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -eq 1 ]
+if [ $# -ge 1 ]
 then
-    ./push.sh $1
+    ./push.sh $*
 fi
