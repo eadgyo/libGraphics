@@ -2,5 +2,6 @@
 
 if [ $# -ge 1 ]
 then
-    ./push.sh $*
+    ./build.sh
+    ./push.sh "$*"
 fi
