@@ -88,6 +88,7 @@ public class Image implements Cloneable
         spriteData = new SpriteData();
         color = new myColor(1.0f, 1.0f, 1.0f, 1.0f);
         colorFilter = new myColor();
+        rec = new Rectangle();
 
         initialize(surface, width, height, currentFrame);
     }
