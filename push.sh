@@ -1,4 +1,7 @@
 #!/bin/bash
+
+echo $#
+
 if [ $# -eq 1 ]
 then
     git add --all
