@@ -49,7 +49,7 @@ public class TextRenderer implements Cloneable
         backColor = myColor.BLACK(0);
         isProportional = true;
         distSpacing = DIST_SPACING;
-        verticalSpacing = VERTICAL_SPACING;
+        verticalSpacing = font.getHeight();
         isUnderlined = false;
         tabSize = TAB_SIZE;
         scale = 1.0f;
