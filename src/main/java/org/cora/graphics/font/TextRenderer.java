@@ -115,6 +115,9 @@ public class TextRenderer implements Cloneable
      */
     public Image transformToImage(String string, int x, int y)
     {
+        if (string.length() == 0)
+            return null;
+
         ArrayList<String> strs = new ArrayList<String>();
         ArrayList<Integer> widths = new ArrayList<Integer>();
         ArrayList<Alignement> aligns = new ArrayList<Alignement>();
