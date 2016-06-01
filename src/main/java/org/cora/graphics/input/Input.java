@@ -291,7 +291,7 @@ public class Input
             {
                 if (isAlphaNumeric(key))
                 {
-                    if (keysPressed[key])
+                    if (keysDown[key])
                     {
                         if (tlastChar > WAIT_LAST_CHAR)
                         {
@@ -326,7 +326,7 @@ public class Input
                     }
                 }
 
-                keysPressed[key] = true;
+                keysPressed[key] = !keysDown[key];
                 keysDown[key] = true;
             }
             else if (action == GLFW_RELEASE)

@@ -49,7 +49,7 @@ public class TextRenderer implements Cloneable
         backColor = myColor.BLACK(0);
         isProportional = true;
         distSpacing = DIST_SPACING;
-        verticalSpacing = font.getHeight();
+        verticalSpacing = VERTICAL_SPACING;
         isUnderlined = false;
         tabSize = TAB_SIZE;
         scale = 1.0f;
@@ -138,7 +138,7 @@ public class TextRenderer implements Cloneable
 
         transformToStrs(string, strs, widths, aligns, align);
 
-        surface.h = strs.size() * getFontHeight();
+        surface.h = strs.size() * (getFontHeight() + verticalSpacing);
         surface.BytesPerPixel = 4;
 
         if (align == Alignement.LEFT)
@@ -159,7 +159,7 @@ public class TextRenderer implements Cloneable
         {
             printLine(surface.pixels, strs.get(i), x0, y0, widths.get(i), surface.w,
                     aligns.get(i), surface.BytesPerPixel);
-            y0 += verticalSpacing;
+            y0 += verticalSpacing + font.getHeight();
         }
 
         text.initialize(surface);
@@ -355,7 +355,7 @@ public class TextRenderer implements Cloneable
         if (string.length() == 0)
             return;
 
-        float height = verticalSpacing;
+        float height = verticalSpacing + getFontHeight();
 
         float maxWidth = this.maxWidth / scale;
 
