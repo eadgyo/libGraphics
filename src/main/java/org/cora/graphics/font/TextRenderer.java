@@ -141,7 +141,7 @@ public class TextRenderer implements Cloneable
 
         transformToStrs(string, strs, widths, aligns, align);
 
-        surface.h = strs.size() * (getFontHeight() + verticalSpacing);
+        surface.h = strs.size() * (getHeight() + verticalSpacing);
         surface.BytesPerPixel = 4;
 
         if (align == Alignement.LEFT)
@@ -358,7 +358,7 @@ public class TextRenderer implements Cloneable
         if (string.length() == 0)
             return;
 
-        float height = verticalSpacing + getFontHeight();
+        float height = verticalSpacing + getHeight();
 
         float maxWidth = this.maxWidth / scale;
 
