@@ -182,7 +182,7 @@ public class TextButton extends Button
         {
             if (textImage == null)
                 updateImage();
-            if (textImage == null)
+            if (textImage != null)
                 textImage.draw(g);
         }
         else
