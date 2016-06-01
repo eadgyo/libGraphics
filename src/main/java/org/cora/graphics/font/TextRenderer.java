@@ -141,7 +141,7 @@ public class TextRenderer implements Cloneable
 
         transformToStrs(string, strs, widths, aligns, align);
 
-        surface.h = strs.size() * (getHeight() + verticalSpacing);
+        surface.h = strs.size() * (getHeight() + getVerticalSpacing());
         surface.BytesPerPixel = 4;
 
         if (align == Alignement.LEFT)
@@ -162,7 +162,7 @@ public class TextRenderer implements Cloneable
         {
             printLine(surface.pixels, strs.get(i), x0, y0, widths.get(i), surface.w,
                     aligns.get(i), surface.BytesPerPixel);
-            y0 += verticalSpacing + font.getHeight();
+            y0 += getVerticalSpacing() + font.getHeight();
         }
 
         text.initialize(surface);
@@ -358,7 +358,7 @@ public class TextRenderer implements Cloneable
         if (string.length() == 0)
             return;
 
-        float height = verticalSpacing + getHeight();
+        float height = getVerticalSpacing() + getHeight();
 
         float maxWidth = this.maxWidth / scale;
 
@@ -879,7 +879,7 @@ public class TextRenderer implements Cloneable
      */
     public int getVerticalSpacing()
     {
-        return verticalSpacing;
+        return (int) (verticalSpacing * scale);
     }
 
     /**
