@@ -78,8 +78,9 @@ public class Main
             //g.render(textImage);
 
             input.update(0.016f);
+            System.out.println(input.getTemp());
 
-
+            /*
             if (input.isKeyDown(Input.KEY_ENTER))
             {
                 System.out.println("Enter");
@@ -95,7 +96,7 @@ public class Main
             {
                 System.out.println("mouse scolling:" + input.getMouseWheelX()
                         + ", " + input.getMouseWheelY());
-            }
+            }*/
 
             g.swapGL();
         }

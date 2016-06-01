@@ -275,7 +275,7 @@ public class Input
 
     private static boolean isAlphaNumeric(int scancode)
     {
-        return (scancode >= 'A' && scancode <= 'Z') || (scancode >= 'a' && scancode <= 'z') || (scancode > '0' && scancode < '9');
+        return (scancode >= 'A' && scancode <= 'Z') || (scancode >= 'a' && scancode <= 'z') || (scancode > '0' && scancode < '9' || scancode == ' ');
     }
 
     private class KeyboardListener extends GLFWKeyCallback
@@ -302,18 +302,39 @@ public class Input
                     }
                     else
                     {
-                        tlastChar = 0;
                         temp += (char) key;
+                        tlastChar = 0;
+                    }
+                }
+                else if (key == GLFW_KEY_BACKSPACE)
+                {
+                    if (keysDown[key])
+                    {
+                        if (tlastChar > WAIT_LAST_CHAR)
+                        {
+                            int n = (int) (tlastChar / WAIT_LAST_CHAR);
+                            int length = temp.length() - n;
+                            temp = temp.substring(0, (length > 0) ? length : 0);
+                            tlastChar = 0;
+                        }
+                    }
+                    else
+                    {
+                        tlastChar = 0;
+                        int length = temp.length() - 1;
+                        temp = temp.substring(0, (length > 0) ? length : 0);
                     }
                 }
 
-                keysPressed[key] = !keysDown[key];
+                keysPressed[key] = true;
                 keysDown[key] = true;
             }
             else if (action == GLFW_RELEASE)
             {
                 keysDown[key] = false;
             }
+
+
         }
     }
 

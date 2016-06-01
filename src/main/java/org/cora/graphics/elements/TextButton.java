@@ -239,7 +239,7 @@ public class TextButton extends Button
     public void removeLast(int r)
     {
         int length = txt.length() - r;
-        this.txt = this.txt.substring(0, (length > 0) ? length : r);
+        this.txt = this.txt.substring(0, (length > 0) ? length : 0);
     }
 
     public void append(String c)
