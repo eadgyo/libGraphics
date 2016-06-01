@@ -159,7 +159,7 @@ public class TextRenderer implements Cloneable
         {
             printLine(surface.pixels, strs.get(i), x0, y0, widths.get(i), surface.w,
                     aligns.get(i), surface.BytesPerPixel);
-            y0 += height;
+            y0 += verticalSpacing;
         }
 
         text.initialize(surface);
@@ -355,7 +355,7 @@ public class TextRenderer implements Cloneable
         if (string.length() == 0)
             return;
 
-        float height = getFontHeight();
+        float height = verticalSpacing;
 
         float maxWidth = this.maxWidth / scale;
 
