@@ -17,8 +17,6 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.GL_TEXTURE_BASE_LEVEL;
 import static org.lwjgl.opengl.GL12.GL_TEXTURE_MAX_LEVEL;
-import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
-import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Graphics
@@ -214,28 +212,9 @@ public class Graphics
         glPopMatrix();
     }
 
-
-    /**
-     * Render image on texture
-     * @param image rendered image
-     * @param surface render dest
-     */
-    public void render(Image image, Surface surface)
+    public void setOutpout(int x, int y, int width, int height)
     {
-        setOutpout(surface);
-        image.draw(this);
-        resetOuput();
-
-    }
-
-    /**
-     * Change output renderer
-     * @param surface output
-     */
-    public void setOutpout(Surface surface)
-    {
-        glBindFramebuffer(GL_FRAMEBUFFER, surface.texture);
-        glViewport(0, 0, surface.w, surface.h);
+        glViewport(x, y, width, height);
     }
 
     /**
@@ -243,40 +222,9 @@ public class Graphics
      */
     public void resetOuput()
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glViewport(0, 0, width, height);
     }
 
-    /**
-     * Create empty GL texture
-     * @param width texture length
-     * @param height texture length
-     * @return created texture
-     */
-    public Surface createTexture(int width, int height)
-    {
-        Surface surface = new Surface();
-        surface.w = width;
-        surface.h = height;
-        surface.BytesPerPixel = 4;
-        surface.pixels = null;
-        surface.textureName = "Created-texture";
-        surface.pixels = null;
-        createBlankTextureGL(surface);
-
-        return surface;
-    }
-
-    /**
-     * Create image with empty GL texture
-     * @param width texture length
-     * @param height texture length
-     * @return created image
-     */
-    public Image createImage(int width, int height)
-    {
-        return new Image(createTexture(width, height));
-    }
 
     /**
      * Render part of texture to screen
@@ -322,26 +270,6 @@ public class Graphics
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    /**
-     * Create blank texture
-     * @param surface texture
-     */
-    public void createBlankTextureGL(Surface surface)
-    {
-        int texture = glGenTextures();
-
-        glBindTexture(GL_TEXTURE_2D, texture);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0); // Always
-        // set the base and max mipmap levels of a texture.
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
-
-
-        glBindTexture(GL_TEXTURE_2D, 0);
-        surface.texture = texture;
-    }
 
     /**
      * Load texture in video memory

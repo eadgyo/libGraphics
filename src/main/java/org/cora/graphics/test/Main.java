@@ -10,7 +10,6 @@ import org.cora.graphics.graphics.Graphics;
 import org.cora.graphics.graphics.Surface;
 import org.cora.graphics.graphics.myColor;
 import org.cora.graphics.input.Input;
-import org.cora.graphics.manager.FileManager;
 import org.cora.graphics.manager.TextureManager;
 
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
@@ -62,6 +61,8 @@ public class Main
         Image textImage = text.transformToImage("Je suis assez fort pour! \n Bonjour", 0, 0);
         g.loadTextureGL(textImage.getSpriteData().surface);
 
+
+
         while (glfwWindowShouldClose(g.getScreen()) == GL_FALSE)
         {
             //g.setColor(myColor.WHITE());
@@ -72,7 +73,10 @@ public class Main
             //text.print(g, "Bonjour je m'appelle Rodrigo DeSanchez, je suis le plus beau des princes.\n\t Hier j'ai copulé avec Madry.", 0, 0);
 
 
+
+
             button.render(g);
+
 
             //g.render(textImage);
 

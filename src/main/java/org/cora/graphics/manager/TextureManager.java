@@ -183,16 +183,7 @@ public class TextureManager
     {
         return createTexture(file, true);
     }
-
-    public Surface createTexture(int width, int height)
-    {
-        Surface surface = g.createTexture(width, height);
-        if (surface != null)
-        {
-            addTexture(surface);
-        }
-        return surface;
-    }
+    
 
     public static Surface transformToImage(BufferedImage image)
     {
