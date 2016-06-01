@@ -71,16 +71,13 @@ public class Main
             g.setColor(myColor.WHITE());
 
             //text.print(g, "Bonjour je m'appelle Rodrigo DeSanchez, je suis le plus beau des princes.\n\t Hier j'ai copulé avec Madry.", 0, 0);
-
-
-
-
+            
             button.render(g);
 
 
             //g.render(textImage);
 
-            input.update();
+            input.update(0.016f);
 
 
             if (input.isKeyDown(Input.KEY_ENTER))

@@ -10,34 +10,40 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Input
 {
-    private GLFWKeyCallback         keyCallback;
+    private String temp;
+
+    private GLFWKeyCallback keyCallback;
     private GLFWMouseButtonCallback mouseButtonCallback;
-    private GLFWCursorPosCallback   mouseMotionCallback;
-    private GLFWScrollCallback      mouseScrollCallback;
+    private GLFWCursorPosCallback mouseMotionCallback;
+    private GLFWScrollCallback mouseScrollCallback;
 
-    public static final int         KEY_ENTER             = 0;
-    public static final int         KEY_ESC               = 1;
-    public static final int         KEY_SPACE             = 2;
-    public static final int         MOUSE_BUTTON_1        = 0;
-    public static final int         MOUSE_BUTTON_2        = 1;
+    public static final int KEY_ENTER = GLFW_KEY_ENTER;
+    public static final int KEY_ESC = GLFW_KEY_ESCAPE;
+    public static final int KEY_SPACE = GLFW_KEY_SPACE;
+    public static final int MOUSE_BUTTON_1 = 0;
+    public static final int MOUSE_BUTTON_2 = 1;
+    public static final float WAIT_LAST_CHAR = 0.1f;
 
-    private final static int        NUMBER_OF_KEYS        = 4;
-    private boolean                 quit;
+    private final static int NUMBER_OF_KEYS = 65536;
 
-    private boolean                 mouseMoves;
-    private boolean                 mouseScrolls;
-    private double                  mousePos[]            = new double[2];
-    private boolean                 mouseDown;
-    private boolean                 mouseButtonsDown[]    = new boolean[2];
-    private boolean                 mousePressed;
-    private boolean                 mouseButtonsPressed[] = new boolean[2];
-    private int                     mouseWheelX;
-    private int                     mouseWheelY;
 
-    private boolean                 keyDown;
-    private boolean                 keysDown[]            = new boolean[NUMBER_OF_KEYS];
-    private boolean                 keyPressed;
-    private boolean                 keysPressed[]         = new boolean[NUMBER_OF_KEYS];
+    private boolean quit;
+    private float tlastChar;
+
+    private boolean mouseMoves;
+    private boolean mouseScrolls;
+    private double mousePos[] = new double[2];
+    private boolean mouseDown;
+    private boolean mouseButtonsDown[] = new boolean[2];
+    private boolean mousePressed;
+    private boolean mouseButtonsPressed[] = new boolean[2];
+    private int mouseWheelX;
+    private int mouseWheelY;
+
+    private boolean keyDown;
+    private boolean keysDown[] = new boolean[NUMBER_OF_KEYS];
+    private boolean keyPressed;
+    private boolean keysPressed[] = new boolean[NUMBER_OF_KEYS];
 
     public Input()
     {
@@ -52,6 +58,8 @@ public class Input
 
         mouseWheelX = 0;
         mouseWheelY = 0;
+        tlastChar = 0;
+        temp = "";
 
         clear();
         keyCallback = new KeyboardListener();
@@ -62,6 +70,7 @@ public class Input
 
     /**
      * Init events handling
+     *
      * @param screen screen id
      */
     public void initGL(long screen)
@@ -252,8 +261,9 @@ public class Input
         keysPressed[n] = false;
     }
 
-    public void update()
+    public void update(float dt)
     {
+        tlastChar += dt;
         mouseWheelX = 0;
         mouseWheelY = 0;
         mouseMoves = false;
@@ -263,44 +273,46 @@ public class Input
         glfwPollEvents();
     }
 
+    private static boolean isAlphaNumeric(int scancode)
+    {
+        return (scancode >= 'A' && scancode <= 'Z') || (scancode >= 'a' && scancode <= 'z') || (scancode > '0' && scancode < '9');
+    }
+
     private class KeyboardListener extends GLFWKeyCallback
     {
         @Override
         public void invoke(long window, int key, int scancode, int action,
-                int mods)
+                           int mods)
         {
+            if (key >= NUMBER_OF_KEYS)
+                return;
+
             if (action == GLFW_PRESS)
             {
-                switch (key)
+                if (isAlphaNumeric(key))
                 {
-                    case GLFW_KEY_SPACE:
-                        keysPressed[KEY_SPACE] = !keysDown[KEY_SPACE];
-                        keysDown[KEY_SPACE] = true;
-                        break;
-                    case GLFW_KEY_ENTER:
-                        keysPressed[KEY_ENTER] = !keysDown[KEY_ENTER];
-                        keysDown[KEY_ENTER] = true;
-                        break;
-                    case GLFW_KEY_ESCAPE:
-                        keysPressed[KEY_ESC] = !keysDown[KEY_ESC];
-                        keysDown[KEY_ESC] = true;
-                        break;
+                    if (keysPressed[key])
+                    {
+                        if (tlastChar > WAIT_LAST_CHAR)
+                        {
+                            int n = (int) (tlastChar / WAIT_LAST_CHAR);
+                            tlastChar = 0;
+                            temp += (char) key;
+                        }
+                    }
+                    else
+                    {
+                        tlastChar = 0;
+                        temp += (char) key;
+                    }
                 }
+
+                keysPressed[key] = !keysDown[key];
+                keysDown[key] = true;
             }
             else if (action == GLFW_RELEASE)
             {
-                switch (key)
-                {
-                    case GLFW_KEY_SPACE:
-                        keysDown[KEY_SPACE] = false;
-                        break;
-                    case GLFW_KEY_ENTER:
-                        keysDown[KEY_ENTER] = false;
-                        break;
-                    case GLFW_KEY_ESCAPE:
-                        keysDown[KEY_ESC] = false;
-                        break;
-                }
+                keysDown[key] = false;
             }
         }
     }
@@ -364,4 +376,8 @@ public class Input
             mouseScrolls = true;
         }
     }
+
+    public String getTemp() { return temp; }
+
+    public void clearTemp() { temp = ""; }
 }
