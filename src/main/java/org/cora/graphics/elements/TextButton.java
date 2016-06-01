@@ -235,4 +235,15 @@ public class TextButton extends Button
         text.setSize(size);
         textImage = null;
     }
+
+    public void removeLast(int r)
+    {
+        int length = txt.length() - r;
+        this.txt = this.txt.substring(0, (length > 0) ? length : r);
+    }
+
+    public void append(String c)
+    {
+        this.txt += c;
+    }
 }
