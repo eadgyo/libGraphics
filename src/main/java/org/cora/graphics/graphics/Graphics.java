@@ -358,11 +358,24 @@ public class Graphics
         fillCircle(circle.getCenter(), circle.getRadius(), n);
     }
 
+    /**
+     * Fill circle
+     * @param center circle center
+     * @param radius circle radius
+     * @param n number of sides of circle
+     */
     public void fillCircle(Vector2D center, float radius, int n)
     {
         fillCircle(center.x, center.y, radius, n);
     }
 
+    /**
+     * Fill circle
+     * @param x0 circle center x
+     * @param y0 circle center y
+     * @param radius circle radius
+     * @param n number of sides of circle
+     */
     public void fillCircle(float x0, float y0, float radius, int n)
     {
         if (n < 0)
@@ -383,16 +396,34 @@ public class Graphics
         glEnd();
     }
 
+    /**
+     * Draw circle
+     * @param circle source
+     * @param n number of side of circle
+     */
     public void drawCircle(Circle circle, int n)
     {
         drawCircle(circle.getCenter(), circle.getRadius(), n);
     }
 
+    /**
+     * Draw circle
+     * @param center circle center
+     * @param radius circle radius
+     * @param n number of sides of circle
+     */
     public void drawCircle(Vector2D center, float radius, int n)
     {
         drawCircle(center.x, center.y, radius, n);
     }
 
+    /**
+     * Draw circle
+     * @param x0 circle center x
+     * @param y0 circle center y
+     * @param radius circle radius
+     * @param n number of sides of circle
+     */
     public void drawCircle(float x, float y, float radius, int n)
     {
         if (n < 1)
