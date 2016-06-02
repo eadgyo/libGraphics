@@ -5,6 +5,7 @@ import org.cora.graphics.base.Rect;
 import org.cora.graphics.base.SpriteData;
 import org.cora.graphics.manager.FileManager;
 import org.cora.graphics.manager.TextureManager;
+import org.cora.maths.Circle;
 import org.cora.maths.Form;
 import org.cora.maths.Rectangle;
 import org.cora.maths.Vector2D;
@@ -332,13 +333,98 @@ public class Graphics
     public void fillRec(int x, int y, int w, int h)
     {
         glBegin(GL_POLYGON);
-        glVertex2f(x, y);
-        glVertex2f(x + w, y);
-        glVertex2f(x + w, y + h);
-        glVertex2f(x, y + h);
+        glVertex2f(x    , y     );
+        glVertex2f(x + w, y     );
+        glVertex2f(x + w, y + h );
+        glVertex2f(x    , y + h );
         glEnd();
     }
-    
+
+    public void drawRec(float x, float y, float w, float h)
+    {
+        drawLine(x      , y     , x + w , y     );
+        drawLine(x + w  , y     , x + w , y + h );
+        drawLine(x + w  , y + h , x     , y + h );
+        drawLine(x      , y + h , x     , y     );
+    }
+
+    /**
+     * Fill circle
+     * @param circle source
+     * @param n number of side of circle
+     */
+    public void fillCircle(Circle circle, int n)
+    {
+        fillCircle(circle.getCenter(), circle.getRadius(), n);
+    }
+
+    public void fillCircle(Vector2D center, float radius, int n)
+    {
+        fillCircle(center.x, center.y, radius, n);
+    }
+
+    public void fillCircle(float x0, float y0, float radius, int n)
+    {
+        if (n < 0)
+            return;
+
+        glBegin(GL_POLYGON);
+
+        float radiusPart = (float) (Math.PI / (n * 2));
+        for (int i = 0; i < n; i++)
+        {
+            float x = (float) Math.cos(radiusPart*i);
+            float y = (float) Math.sin(radiusPart*i);
+            glVertex2f(x0 + x*radius, y0 + y*radius);
+            glVertex2f(x0 + x*radius, y0 - y*radius);
+            glVertex2f(x0 - x*radius, y0 - y*radius);
+            glVertex2f(x0 - x*radius, y0 + y*radius);
+        }
+        glEnd();
+    }
+
+    public void drawCircle(Circle circle, int n)
+    {
+        drawCircle(circle.getCenter(), circle.getRadius(), n);
+    }
+
+    public void drawCircle(Vector2D center, float radius, int n)
+    {
+        drawCircle(center.x, center.y, radius, n);
+    }
+
+    public void drawCircle(float x, float y, float radius, int n)
+    {
+        if (n < 1)
+            return;
+
+        float radiusPart = (float) (Math.PI / ((n - 1) * 2));
+
+        float x1 = (float) Math.cos(0);
+        float y1 = (float) Math.sin(0);
+        float x0;
+        float y0;
+        for (int i = 1; i < n; i++)
+        {
+            x0 = x1;
+            y0 = y1;
+            x1 = (float) Math.cos(radiusPart*i);
+            y1 = (float) Math.sin(radiusPart*i);
+            drawLine(x + x0*radius, y + y0*radius, x + x1*radius, y + y1*radius);
+            drawLine(x + x0*radius, y - y0*radius, x + x1*radius, y - y1*radius);
+            drawLine(x - x0*radius, y + y0*radius, x - x1*radius, y + y1*radius);
+            drawLine(x - x0*radius, y - y0*radius, x - x1*radius, y - y1*radius);
+        }
+    }
+
+    public void drawLine(float x0, float y0, float x1, float y1)
+    {
+        glBegin(GL_LINES);
+        glVertex2f(x0, y0);
+        glVertex2f(x1, y1);
+        glEnd();
+    }
+
     public void drawLine(Vector2D p1, Vector2D p2)
     {
         glBegin(GL_LINES);

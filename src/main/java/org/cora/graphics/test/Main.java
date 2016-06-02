@@ -69,10 +69,11 @@ public class Main
 
             g.clear();
             g.setColor(myColor.WHITE());
+            g.drawCircle(150, 150, 60, 120);
 
-            //text.print(g, "Bonjour je m'appelle Rodrigo DeSanchez, je suis le plus beau des princes.\n\t Hier j'ai copulé avec Madry.", 0, 0);
+            text.print(g, "Bonjour je m'appelle Rodrigo DeSanchez, je suis le plus beau des princes.\n\t Hier j'ai copulé avec Madry.", 0, 0);
             
-            button.render(g);
+            //button.render(g);
 
 
             //g.render(textImage);
