@@ -419,8 +419,8 @@ public class Graphics
 
     /**
      * Draw circle
-     * @param x0 circle center x
-     * @param y0 circle center y
+     * @param x circle center x
+     * @param y circle center y
      * @param radius circle radius
      * @param n number of sides of circle
      */
