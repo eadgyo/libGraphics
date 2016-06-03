@@ -26,7 +26,7 @@ public class Input
 
     private final static int NUMBER_OF_KEYS = 65536;
 
-
+    private boolean azerty;
     private boolean quit;
     private float tlastChar;
 
@@ -48,6 +48,7 @@ public class Input
     public Input()
     {
         quit = false;
+        azerty = true;
 
         mouseScrolls = false;
         mouseMoves = false;
@@ -278,6 +279,38 @@ public class Input
         return (scancode >= 'A' && scancode <= 'Z') || (scancode >= 'a' && scancode <= 'z') || (scancode > '0' && scancode < '9' || scancode == ' ');
     }
 
+    public static int convertAzerty(int key)
+    {
+        switch (key)
+        {
+            case 'a':
+                return 'q';
+            case 'A':
+                return 'Q';
+            case 'q':
+                return 'a';
+            case 'Q':
+                return 'A';
+            case 'z':
+                return 'w';
+            case 'Z':
+                return 'W';
+            case 'w':
+                return 'W';
+            case 'W':
+                return 'Z';
+            case '?':
+                return 'm';
+            case ';':
+                return 'M';
+            case 'm':
+                return ',';
+            case 'M':
+                return '?';
+        }
+        return key;
+    }
+
     private class KeyboardListener extends GLFWKeyCallback
     {
         @Override
@@ -287,6 +320,12 @@ public class Input
             if (key >= NUMBER_OF_KEYS)
                 return;
 
+            char aze = (char) key;
+
+            if (azerty)
+            {
+                key = convertAzerty(key);
+            }
             if (action == GLFW_PRESS)
             {
                 if (isAlphaNumeric(key))
@@ -333,8 +372,6 @@ public class Input
             {
                 keysDown[key] = false;
             }
-
-
         }
     }
 
@@ -401,4 +438,14 @@ public class Input
     public String getTemp() { return temp; }
 
     public void clearTemp() { temp = ""; }
+
+    public boolean isAzerty()
+    {
+        return azerty;
+    }
+
+    public void setAzerty(boolean azerty)
+    {
+        this.azerty = azerty;
+    }
 }
