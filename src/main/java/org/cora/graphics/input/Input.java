@@ -320,8 +320,6 @@ public class Input
             if (key >= NUMBER_OF_KEYS)
                 return;
 
-            char aze = (char) key;
-
             if (azerty)
             {
                 key = convertAzerty(key);
