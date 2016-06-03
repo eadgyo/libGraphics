@@ -23,8 +23,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Graphics
 {
     private long              screen;
-    int width;
-    int height;
+    private int width;
+    private int height;
 
     public Graphics()
     {
