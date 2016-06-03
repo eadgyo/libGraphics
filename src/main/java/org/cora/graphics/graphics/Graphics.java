@@ -15,6 +15,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeLimits;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.GL_TEXTURE_BASE_LEVEL;
 import static org.lwjgl.opengl.GL12.GL_TEXTURE_MAX_LEVEL;
@@ -104,6 +105,8 @@ public class Graphics
         glfwDefaultWindowHints();
 
         screen = glfwCreateWindow(width, height, windowName, NULL, NULL);
+
+        glfwSetWindowSizeLimits(screen, width, height, width, height);
 
         if (screen == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
@@ -346,6 +349,22 @@ public class Graphics
         drawLine(x + w  , y     , x + w , y + h );
         drawLine(x + w  , y + h , x     , y + h );
         drawLine(x      , y + h , x     , y     );
+    }
+
+
+    public void fillCircle(Circle circle, int n, float start, float end)
+    {
+
+    }
+
+    public void fillCircle(Vector2D center, float radius, int n, float start, float end)
+    {
+
+    }
+
+    public void fillCircle(float x0, float y0, float radius, int n, float start, float end)
+    {
+
     }
 
     /**
