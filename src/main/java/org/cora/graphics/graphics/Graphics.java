@@ -455,7 +455,9 @@ public class Graphics
         float radiusPart = (float) (Math.PI * 2 / n);
         if (start > end)
         {
-            radiusPart = - radiusPart;
+            start += end;
+            end = start - end;
+            start = start - end;
         }
 
         float x, y;
