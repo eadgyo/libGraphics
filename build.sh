@@ -29,4 +29,6 @@ fi
 folder="$group/$idname/$version"
 
 cp target/*.jar "$folder"
+cp target/*.jar "~/.m2/repository/$folder"
 cp pom.xml $folder/$idname-$version.pom
+cp pom.xml "~/.m2/repository/$folder/$idname-$version.pom"
