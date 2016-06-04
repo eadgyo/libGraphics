@@ -459,8 +459,7 @@ public class Graphics
         }
 
         float x, y;
-
-        start = (int) (start/radiusPart) * radiusPart;
+        //start = (int) (start/radiusPart) * radiusPart;
         glBegin(type);
         glVertex2f(x0, y0);
         for (float rad = start; rad < end; rad += radiusPart)
