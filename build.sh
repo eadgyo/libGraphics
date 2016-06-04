@@ -1,5 +1,5 @@
 #!/bin/bash
-mvn clean install
+#mvn clean install
 
 name=$(basename target/*javadoc.jar)
 group=${name%%-*}
@@ -9,7 +9,7 @@ version=${name#*-}
 version=${version#*-}
 version=${version%-*}
 
-m2="~/.m2/repository/"
+m2=~/.m2/repository
 
 echo "Jar in $group/$idname/$version"
 
@@ -30,20 +30,22 @@ fi
 
 if [ ! -d "$m2/$group" ]
 then
-    mkdir $m2/$group
+    mkdir "$m2/$group"
 fi
 
 if [ ! -d "$m2/$group/$idname" ]
 then
-    mkdir $m2/$group/$idname
+    mkdir "$m2/$group/$idname"
 fi
 
 if [ ! -d "$m2/$group/$idname/$version" ]
 then
-    mkdir $m2/$group/$idname/$version
+    mkdir "$m2/$group/$idname/$version"
 fi
 
 folder="$group/$idname/$version"
+
+echo "$m2/$folder"
 
 cp target/*.jar "$folder"
 cp target/*.jar "$m2/$folder"
