@@ -503,7 +503,7 @@ public class Graphics
     public void fillCircle(Vector2D center, float radius, int n)
     {
         glBegin(GL_POLYGON);
-        addPointsCircle(center.x center.y, radius, n);
+        addPointsCircle(center.x, center.y, radius, n);
         glEnd();
     }
 
@@ -559,7 +559,7 @@ public class Graphics
     public void drawCircle(Vector2D center, float radius, int n)
     {
         glBegin(GL_LINE_LOOP);
-        addPointsCircle(center.x center.y, radius, n);
+        addPointsCircle(center.x, center.y, radius, n);
         glEnd();
     }
 
