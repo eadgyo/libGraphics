@@ -62,16 +62,30 @@ public class Main
         g.loadTextureGL(textImage.getSpriteData().surface);
 
 
-
+        float a = 0;
+        float b = (float) (Math.PI*2);
+        float add = 0.1f;
         while (glfwWindowShouldClose(g.getScreen()) == GL_FALSE)
         {
             //g.setColor(myColor.WHITE());
 
             g.clear();
             g.setColor(myColor.WHITE());
-            g.drawCircle(150, 150, 60, 120);
-
-            text.print(g, "Bonjour je m'appelle Rodrigo DeSanchez, je suis le plus beau des princes.\n\t Hier j'ai copulé avec Madry.", 0, 0);
+            g.drawCircle(150, 150, 60, 10);
+            g.drawCircle(100, 100, 60, 15, a, b);
+            a += add;
+            if ( a > 2*(Math.PI))
+            {
+                add = -add;
+                a = (float)(2*(Math.PI));
+            }
+            if ( a < 0)
+            {
+                add = -add;
+                a = 0;
+            }
+            //g.fillCircle(100, 100, 60, 10);
+            //text.print(g, "Bonjour je m'appelle Rodrigo DeSanchez, je suis le plus beau des princes.\n\t Hier j'ai copulé avec Madry.", 0, 0);
             
             //button.render(g);
 
