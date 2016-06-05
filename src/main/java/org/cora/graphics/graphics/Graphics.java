@@ -376,6 +376,84 @@ public class Graphics
      * @param start start radius sup 0
      * @param end end radius sup 0
      */
+    public void fillCircleFixed(Circle circle, int n, float start, float end)
+    {
+        addPointsCircleFixed(circle.getCenterX(), circle.getCenterY(), circle.getRadius(), n, start, end, GL_POLYGON);
+    }
+
+    /**
+     * Fill part of circle
+     * @param center coordinates
+     * @param radius circle radius
+     * @param n number of points
+     * @param start start radius sup 0
+     * @param end end radius sup 0
+     */
+    public void fillCircleFixed(Vector2D center, float radius, int n, float start, float end)
+    {
+        addPointsCircleFixed(center.x, center.y, radius, n, start, end, GL_POLYGON);
+    }
+
+    /**
+     * Fill part of circle
+     * @param x0 coordinate
+     * @param y0 coordinate
+     * @param radius circle radius
+     * @param n number of points
+     * @param start start radius sup 0
+     * @param end end radius sup 0
+     */
+    public void fillCircleFixed(float x0, float y0, float radius, int n, float start, float end)
+    {
+        addPointsCircleFixed(x0, y0, radius, n, start, end, GL_POLYGON);
+    }
+
+    /**
+     * Draw part of circle
+     * @param circle circle
+     * @param n number of points
+     * @param start start radius sup 0
+     * @param end end radius sup 0
+     */
+    public void drawCircleFixed(Circle circle, int n, float start, float end)
+    {
+        addPointsCircleFixed(circle.getCenterX(), circle.getCenterY(), circle.getRadius(), n, start, end, GL_LINE_LOOP);
+    }
+
+    /**
+     * Draw part of circle
+     * @param center coordinates
+     * @param radius circle radius
+     * @param n number of points
+     * @param start start radius sup 0
+     * @param end end radius sup 0
+     */
+    public void drawCircleFixed(Vector2D center, float radius, int n, float start, float end)
+    {
+        addPointsCircleFixed(center.x, center.y, radius, n, start, end, GL_LINE_LOOP);
+    }
+
+    /**
+     * Draw part of circle
+     * @param x0 coordinate
+     * @param y0 coordinate
+     * @param radius circle radius
+     * @param n number of points
+     * @param start start radius sup 0
+     * @param end end radius sup 0
+     */
+    public void drawCircleFixed(float x0, float y0, float radius, int n, float start, float end)
+    {
+        addPointsCircleFixed(x0, y0, radius, n, start, end, GL_LINE_LOOP);
+    }
+
+    /**
+     * Fill part of circle
+     * @param circle circle
+     * @param n number of points
+     * @param start start radius sup 0
+     * @param end end radius sup 0
+     */
     public void fillCircle(Circle circle, int n, float start, float end)
     {
         addPointsCircle(circle.getCenterX(), circle.getCenterY(), circle.getRadius(), n, start, end, GL_POLYGON);
@@ -462,6 +540,37 @@ public class Graphics
 
         float x, y;
         //start = (int) (start/radiusPart) * radiusPart;
+        glBegin(type);
+        glVertex2f(x0, y0);
+        for (float rad = start; rad < end; rad += radiusPart)
+        {
+            x = (float) Math.cos(rad);
+            y = (float) Math.sin(rad);
+
+            glVertex2f(x0 + x*radius, y0 + y*radius);
+        }
+        x = (float) Math.cos(end);
+        y = (float) Math.sin(end);
+        glVertex2f(x0 + x*radius, y0 + y*radius);
+        glEnd();
+    }
+
+
+    private void addPointsCircleFixed(float x0, float y0, float radius, int n, float start, float end, int type)
+    {
+        if (n < 0)
+            return;
+
+        float radiusPart = (float) (Math.PI * 2 / n);
+        if (start > end)
+        {
+            start += end;
+            end = start - end;
+            start = start - end;
+        }
+
+        float x, y;
+        start = (int) (start/radiusPart) * radiusPart;
         glBegin(type);
         glVertex2f(x0, y0);
         for (float rad = start; rad < end; rad += radiusPart)
