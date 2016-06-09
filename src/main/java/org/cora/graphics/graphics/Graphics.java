@@ -722,8 +722,18 @@ public class Graphics
         if (form.size() < 2)
             return;
 
-        glBegin(GL_LINE_LOOP);
-        addPointsForm(form);
+        //glBegin(GL_LINE_LOOP);
+        //addPointsForm(form);
+        //glEnd();
+
+        glBegin(GL_LINE_STRIP);
+        for (int i = 0; i < form.size(); i++)
+        {
+            Vector2D a = form.get(i);
+            glVertex2f(a.x, a.y);
+        }
+        Vector2D a = form.get(0);
+        glVertex2f(a.x, a.y);
         glEnd();
     }
 
