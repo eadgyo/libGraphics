@@ -762,7 +762,7 @@ public class Graphics
         glTranslatef(vec.x, vec.y, 0);
     }
 
-    public void transltateNeg(Vector2D vec)
+    public void translateNeg(Vector2D vec)
     {
         glTranslatef(-vec.x, -vec.y, 0);
     }
